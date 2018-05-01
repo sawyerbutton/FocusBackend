@@ -23,6 +23,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const create_CAdmin_dto_1 = require("./DTO/create-CAdmin.dto");
 const communityAdmin_service_1 = require("./communityAdmin.service");
+const roles_decorator_1 = require("../shared/Decorators/roles.decorator");
+const roles_guard_1 = require("../shared/Guards/roles.guard");
+const common_2 = require("@nestjs/common");
 let CommunityAdminController = class CommunityAdminController {
     constructor(communityAdminService) {
         this.communityAdminService = communityAdminService;
@@ -72,12 +75,14 @@ let CommunityAdminController = class CommunityAdminController {
 };
 __decorate([
     common_1.Get(),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], CommunityAdminController.prototype, "getAllCommunityAdmin", null);
 __decorate([
     common_1.Get(':id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -85,6 +90,7 @@ __decorate([
 ], CommunityAdminController.prototype, "getCommunityAdmin", null);
 __decorate([
     common_1.Get('/state/:id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -92,6 +98,7 @@ __decorate([
 ], CommunityAdminController.prototype, "getCommunityAdminByState", null);
 __decorate([
     common_1.Post(),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_CAdmin_dto_1.CreateCAdminDto]),
@@ -99,6 +106,7 @@ __decorate([
 ], CommunityAdminController.prototype, "addCommunityAdmin", null);
 __decorate([
     common_1.Patch(':id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_CAdmin_dto_1.CreateCAdminDto]),
@@ -106,6 +114,7 @@ __decorate([
 ], CommunityAdminController.prototype, "updateCommunityAdmin", null);
 __decorate([
     common_1.Delete(':id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -113,6 +122,7 @@ __decorate([
 ], CommunityAdminController.prototype, "deleteCommunityAdmin", null);
 __decorate([
     common_1.Get('communityRelatedInfo/:id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -120,6 +130,7 @@ __decorate([
 ], CommunityAdminController.prototype, "getCommunityRelatedInfo", null);
 CommunityAdminController = __decorate([
     common_1.Controller('communityAdmin'),
+    common_2.UseGuards(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [communityAdmin_service_1.CommunityAdminService])
 ], CommunityAdminController);
 exports.CommunityAdminController = CommunityAdminController;

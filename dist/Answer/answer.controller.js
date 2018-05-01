@@ -22,6 +22,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const answer_service_1 = require("./answer.service");
+const roles_decorator_1 = require("../shared/Decorators/roles.decorator");
+const roles_guard_1 = require("../shared/Guards/roles.guard");
+const common_2 = require("@nestjs/common");
 let AnswerController = class AnswerController {
     constructor(answerService) {
         this.answerService = answerService;
@@ -65,12 +68,14 @@ let AnswerController = class AnswerController {
 };
 __decorate([
     common_1.Get(),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AnswerController.prototype, "getAllAnswer", null);
 __decorate([
     common_1.Get(':id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -78,6 +83,7 @@ __decorate([
 ], AnswerController.prototype, "getAnswerById", null);
 __decorate([
     common_1.Get('/session/:id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -85,6 +91,7 @@ __decorate([
 ], AnswerController.prototype, "getAnswerBySessionId", null);
 __decorate([
     common_1.Patch(':id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Array]),
@@ -92,6 +99,7 @@ __decorate([
 ], AnswerController.prototype, "addAnswer", null);
 __decorate([
     common_1.Patch(':id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Array]),
@@ -99,6 +107,7 @@ __decorate([
 ], AnswerController.prototype, "updateAnswer", null);
 __decorate([
     common_1.Delete(':id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -106,6 +115,7 @@ __decorate([
 ], AnswerController.prototype, "deleteAnswer", null);
 AnswerController = __decorate([
     common_1.Controller('answer'),
+    common_2.UseGuards(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [answer_service_1.AnswerService])
 ], AnswerController);
 exports.AnswerController = AnswerController;
