@@ -26,7 +26,7 @@ export class CommunityAdminController{
         return msg;
     }
 
-    @Get('/state/:id')
+    @Get('state/:id')
     @Roles('systemAdmin','stateAdmin')
     public async getCommunityAdminByState(@Param() params){
         const msg = await this.communityAdminService.getCommunityAdminByState(params.id);

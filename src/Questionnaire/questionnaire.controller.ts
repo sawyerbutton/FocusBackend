@@ -26,7 +26,7 @@ export class QuestionnaireController {
         return msg;
     }
 
-    @Get("/subDomain/:id")
+    @Get("subDomain/:id")
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async getQuestionnairesBySubDomain(@Param() params){
         const msg = await this.questionnaireService.getQuestionsBySubdomain(params.id);
@@ -54,7 +54,7 @@ export class QuestionnaireController {
         return msg;
     }
 
-    @Get('/domain/:id')
+    @Get('domain/:id')
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async getAllQuestionnaireByDomain(@Param() params){
         const msg = await this.questionnaireService.getQuestionnaireByDomain(params.id);

@@ -21,6 +21,10 @@ export class CommunityMemberService implements ICommunityMemberService{
             .getMany();
     }
 
+    public async getCommunityMemberByUser(options:object):Promise<CommunityMemberEntity|null>{
+        return await this.communityMemberRepository.findOne(options);
+    }
+
     public async getAllCommunityMemberByState(stateId:number):Promise<Array<CommunityMemberEntity>>{
         //stupid version but workable
         const selectedState = await getRepository(StateEntity).findOne({id:stateId});

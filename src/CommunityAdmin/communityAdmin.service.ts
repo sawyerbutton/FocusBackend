@@ -17,6 +17,10 @@ export class CommunityAdminService implements ICommunityService{
         return await this.communityAdminRepository.find();
     }
 
+    public async getCommunityAdminByUser(options:object):Promise<CommunityAdminEntity|null>{
+        return await this.communityAdminRepository.findOne(options);
+    }
+
     public async getCommunityAdmin(id:number):Promise<CommunityAdminEntity | null>{
         return await this.communityAdminRepository.findOneById(id);
     }

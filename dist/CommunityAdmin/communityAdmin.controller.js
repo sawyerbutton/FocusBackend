@@ -89,7 +89,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CommunityAdminController.prototype, "getCommunityAdmin", null);
 __decorate([
-    common_1.Get('/state/:id'),
+    common_1.Get('state/:id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),

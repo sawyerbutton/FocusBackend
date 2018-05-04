@@ -15,6 +15,10 @@ export class BhcoService implements IBhcoService{
         return await this.bhcoRepository.find();
     }
 
+    public async getBhcoByUser(options:object):Promise<BhcoEntity|null>{
+        return await this.bhcoRepository.findOne(options);
+    }
+
     public async getAllBhcoByCommunity(communityId:number):Promise<Array<BhcoEntity>>{
         const selectedCommunity = await getRepository(CommunityEntity).findOne({id:communityId});
         return await this.bhcoRepository.find({community:selectedCommunity.community});

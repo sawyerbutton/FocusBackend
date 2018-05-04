@@ -72,14 +72,14 @@ let BhcoController = class BhcoController {
     }
 };
 __decorate([
-    common_1.Get('bhco'),
+    common_1.Get(),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BhcoController.prototype, "getAllBhco", null);
 __decorate([
-    common_1.Get('Bhco/Community/:id'),
+    common_1.Get('Community/:id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
@@ -87,7 +87,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BhcoController.prototype, "getAllBhcoByCommunity", null);
 __decorate([
-    common_1.Get('Bhco/State/:id'),
+    common_1.Get('State/:id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
@@ -95,14 +95,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BhcoController.prototype, "getAllBhcoByState", null);
 __decorate([
-    common_1.Post('bhco'),
+    common_1.Post(),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_Bhco_dto_1.CreateBhcoDto]),
     __metadata("design:returntype", Promise)
 ], BhcoController.prototype, "addBhco", null);
 __decorate([
-    common_1.Get('bhco/:id'),
+    common_1.Get(':id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
@@ -110,7 +110,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BhcoController.prototype, "getBhco", null);
 __decorate([
-    common_1.Patch('bhco/:id'),
+    common_1.Patch(':id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
@@ -118,7 +118,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BhcoController.prototype, "updateBhco", null);
 __decorate([
-    common_1.Delete('bhco:id'),
+    common_1.Delete(':id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
@@ -126,7 +126,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BhcoController.prototype, "deleteBhco", null);
 BhcoController = __decorate([
-    common_1.Controller(),
+    common_1.Controller('bhco'),
     __metadata("design:paramtypes", [bhco_service_1.BhcoService])
 ], BhcoController);
 exports.BhcoController = BhcoController;

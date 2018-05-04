@@ -35,6 +35,11 @@ let CommunityAdminService = class CommunityAdminService {
             return yield this.communityAdminRepository.find();
         });
     }
+    getCommunityAdminByUser(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.communityAdminRepository.findOne(options);
+        });
+    }
     getCommunityAdmin(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.communityAdminRepository.findOneById(id);

@@ -82,7 +82,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AnswerController.prototype, "getAnswerById", null);
 __decorate([
-    common_1.Get('/session/:id'),
+    common_1.Get('session/:id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),

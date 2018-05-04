@@ -23,7 +23,7 @@ import { ExceptionInterceptor } from '../shared/Interceptors/exception.intercept
 import { ApiUseTags } from '@nestjs/swagger'
 
 
-@Controller()
+@Controller('communityMember')
 // @UseFilters(new HttpExceptionFilter())
 @UseGuards(RolesGuard)
 // @UseInterceptors()
@@ -33,14 +33,14 @@ export class CommunityMemberController{
         private communityMemberService: CommunityMemberService
     ){}
 
-    @Get('communityMember')
+    @Get()
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async getAllCommunityMember(){
         const msg = await this.communityMemberService.getAllCommunityMember();
         return msg;
     };
 
-    @Get('communityMember/bhco/:id')
+    @Get('bhco/:id')
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async getAllCommunityMemberById(@Param() params){
         const msg = await this.communityMemberService.getAllCommunityMemberByBhco(params.id);
@@ -48,28 +48,28 @@ export class CommunityMemberController{
     }
 
     // @HttpCode(201)
-    @Post('communityMember')
+    @Post()
     @Roles('systemAdmin','stateAdmin','communityAdmin')
     public async addCommunityMember(@Body() cMember : CreateCMemberDto){
         const msg = await this.communityMemberService.addCommunityMember(cMember);
         return msg;
     };
 
-    @Get('communityMember/:id')
+    @Get(':id')
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async getCommunityMember(@Param() params){
         const msg = await this.communityMemberService.getCommunityMember(params.id);
         return msg;
     };
 
-    @Patch('communityMember/:id')
+    @Patch(':id')
     @Roles('systemAdmin','stateAdmin','communityAdmin')
     public async upadateCommunityMember(@Param() params,@Body() newCommunityMember:CreateCMemberDto){
         const msg = await this.communityMemberService.updateCommunityMember(params.id,newCommunityMember);
         return msg;
     }
 
-    @Delete('communityMember/:id')
+    @Delete(':id')
     @Roles('systemAdmin','stateAdmin','communityAdmin')
     public async deleteCommunityMember(@Param() params){
         const msg = await this.communityMemberService.deleteCommunityMember(params.id);
@@ -90,14 +90,14 @@ export class CommunityMemberController{
         return msg;
     }
 
-    @Patch('assign/CommunityMember/:id')
+    @Patch('assign/:id')
     @Roles('systemAdmin','stateAdmin','communityAdmin')
     public async assignCommunityMember(@Param() params,@Body() communityMemberIDs:any){
         const msg = await this.communityMemberService.assignCommunityMember(params.id,communityMemberIDs);
         return msg;
     }
 
-    @Patch('unAssign/CommunityMember/')
+    @Patch('unAssign')
     @Roles('systemAdmin','stateAdmin','communityAdmin')
     public async unAssignCommunityMember(@Body() communityMemberIDs:any){
         const msg = await this.communityMemberService.unAssignCommunityMember(communityMemberIDs);

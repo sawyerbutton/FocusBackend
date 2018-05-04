@@ -17,6 +17,10 @@ export class StateAdminService implements IStateAdminService{
         return await this.stateAdminRepository.findOneById(id);
     }
 
+    public async getStateAmdinByUser(options: Object):Promise<StateAdminEntity|null>{
+        return await this.stateAdminRepository.findOne(options);
+    }
+
     public async addStateAdmin(stateAdmin:IStateAdmin):Promise<StateAdminEntity>{
         return await this.stateAdminRepository.save(stateAdmin);
     }

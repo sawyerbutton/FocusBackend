@@ -75,7 +75,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SessionController.prototype, "getAllSession", null);
 __decorate([
-    common_1.Get('/user/:id'),
+    common_1.Get('user/:id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),

@@ -21,10 +21,9 @@ let RolesGuard = class RolesGuard {
         if (!roles) {
             return true;
         }
-        req.user = { "account": "Ted", "roles": ["systemAdmin"] };
         const user = req.user;
-        const hasRole = () => !!user.roles.find((role) => !!roles.find((item) => item === role));
-        return user && user.roles && hasRole();
+        const hasRole = () => !!roles.find((item) => item === user.role);
+        return user && user.role && hasRole();
     }
 };
 RolesGuard = __decorate([

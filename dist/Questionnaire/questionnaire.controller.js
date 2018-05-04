@@ -89,7 +89,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], QuestionnaireController.prototype, "getQuestionnaire", null);
 __decorate([
-    common_1.Get("/subDomain/:id"),
+    common_1.Get("subDomain/:id"),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
@@ -121,7 +121,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], QuestionnaireController.prototype, "deleteQuestionnaire", null);
 __decorate([
-    common_1.Get('/domain/:id'),
+    common_1.Get('domain/:id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),

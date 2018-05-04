@@ -36,6 +36,11 @@ let StateAdminService = class StateAdminService {
             return yield this.stateAdminRepository.findOneById(id);
         });
     }
+    getStateAmdinByUser(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.stateAdminRepository.findOne(options);
+        });
+    }
     addStateAdmin(stateAdmin) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.stateAdminRepository.save(stateAdmin);

@@ -72,14 +72,14 @@ let SubDomainController = class SubDomainController {
     }
 };
 __decorate([
-    common_1.Get('subDomain'),
+    common_1.Get(),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SubDomainController.prototype, "getAllSubDomain", null);
 __decorate([
-    common_1.Get('subDomain/:id'),
+    common_1.Get(':id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
@@ -87,7 +87,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SubDomainController.prototype, "getAllSubDomainByDomainID", null);
 __decorate([
-    common_1.Patch('subDomain/:id'),
+    common_1.Patch(':id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
@@ -95,7 +95,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SubDomainController.prototype, "addSubDomain", null);
 __decorate([
-    common_1.Patch('subDomain/update/:id'),
+    common_1.Patch('update/:id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
@@ -103,7 +103,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SubDomainController.prototype, "updateSubDomain", null);
 __decorate([
-    common_1.Delete('subDomain/:id'),
+    common_1.Delete(':id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
@@ -111,7 +111,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SubDomainController.prototype, "deleteSubDomain", null);
 __decorate([
-    common_1.Delete('subDomain/isolate/:id'),
+    common_1.Delete('isolate/:id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
@@ -126,7 +126,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SubDomainController.prototype, "getAllSubDomainIsolated", null);
 SubDomainController = __decorate([
-    common_1.Controller(),
+    common_1.Controller('subDomain'),
     __metadata("design:paramtypes", [subDomain_service_1.SubDomainService])
 ], SubDomainController);
 exports.SubDomainController = SubDomainController;

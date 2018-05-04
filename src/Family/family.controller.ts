@@ -47,7 +47,7 @@ export class FamilyController {
         return msg;
     }
 
-    @Get('/block/:id')
+    @Get('block/:id')
     @Roles('systemAdmin','stateAdmin','communityAdmin')
     public async getFamilyByBlock(@Param() params){
         const msg = await this.familyService.getFamilyByBlock(params.id);

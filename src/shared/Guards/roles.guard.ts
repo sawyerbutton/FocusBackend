@@ -19,10 +19,13 @@ export class RolesGuard implements CanActivate {
             return true;
         }
         //req should be in session or token
-        req.user = { "account": "Ted", "roles": ["systemAdmin"] };
+        // req.user = { "account": "Ted", "roles": ["systemAdmin"] };
         // const user = req.user;
+        // const hasRole = () => !!user.roles.find((role) => !!roles.find((item) => item === role));
+        // return user && user.roles && hasRole();
+        //req now can fix the roles guard problem
         const user = req.user;
-        const hasRole = () => !!user.roles.find((role) => !!roles.find((item) => item === role));
-        return user && user.roles && hasRole();
+        const hasRole = () => !!roles.find((item)=> item === user.role);
+        return user && user.role && hasRole();
     }
 }

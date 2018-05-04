@@ -33,6 +33,11 @@ let BhcoService = class BhcoService {
             return yield this.bhcoRepository.find();
         });
     }
+    getBhcoByUser(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.bhcoRepository.findOne(options);
+        });
+    }
     getAllBhcoByCommunity(communityId) {
         return __awaiter(this, void 0, void 0, function* () {
             const selectedCommunity = yield typeorm_1.getRepository(community_entity_1.CommunityEntity).findOne({ id: communityId });

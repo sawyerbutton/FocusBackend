@@ -36,6 +36,11 @@ let CommunityMemberService = class CommunityMemberService {
                 .getMany();
         });
     }
+    getCommunityMemberByUser(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.communityMemberRepository.findOne(options);
+        });
+    }
     getAllCommunityMemberByState(stateId) {
         return __awaiter(this, void 0, void 0, function* () {
             const selectedState = yield typeorm_1.getRepository(state_entity_1.StateEntity).findOne({ id: stateId });

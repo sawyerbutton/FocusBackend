@@ -77,7 +77,7 @@ __decorate([
 ], StateAdminController.prototype, "getStateAdmin", null);
 __decorate([
     common_1.Post(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
+    roles_decorator_1.Roles('systemAdmin'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_StateAdmin_dto_1.CreateStateAdminDto]),
@@ -85,7 +85,7 @@ __decorate([
 ], StateAdminController.prototype, "addStateAdmin", null);
 __decorate([
     common_1.Patch(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
+    roles_decorator_1.Roles('systemAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_StateAdmin_dto_1.CreateStateAdminDto]),
@@ -93,7 +93,7 @@ __decorate([
 ], StateAdminController.prototype, "updateStateAdmin", null);
 __decorate([
     common_1.Delete(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
+    roles_decorator_1.Roles('systemAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

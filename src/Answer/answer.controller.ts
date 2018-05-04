@@ -26,7 +26,7 @@ export class AnswerController {
         return msg;
     }
 
-    @Get('/session/:id')
+    @Get('session/:id')
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async getAnswerBySessionId(@Param() params){
         const msg = await this.answerService.getAnswersBySessionId(params.id);

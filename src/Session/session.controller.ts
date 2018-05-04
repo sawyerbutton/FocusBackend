@@ -19,7 +19,7 @@ export class SessionController {
         return msg;
     }
 
-    @Get('/user/:id')
+    @Get('user/:id')
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async getAllSessionByUserId(@Param() params){
         const msg = await this.sessionService.getSessionByUserId(params.id);

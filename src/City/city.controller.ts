@@ -47,7 +47,7 @@ export class CityController {
         return msg;
     }
 
-    @Get('/county/:id')
+    @Get('county/:id')
     @Roles('systemAdmin','stateAdmin','communityAdmin')
     public async getCityByCounty(@Param() params){
         const msg = await this.cityService.getCityByCounty(params.id);

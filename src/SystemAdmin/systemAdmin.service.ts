@@ -18,6 +18,10 @@ export class SystemAdminService implements ISystemAdminService{
         return await this.systemAdminRepository.findOneById(id);
     }
 
+    public async getSystemAdminByUser(options: Object):Promise<SystemAdminEntity|null>{
+        return await this.systemAdminRepository.findOne(options);
+    }
+
     public async addSystemAdmin(systemAdmin:ISystemAdmin):Promise<SystemAdminEntity>{
         return await  this.systemAdminRepository.save(systemAdmin);
     }

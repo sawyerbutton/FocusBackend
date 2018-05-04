@@ -36,6 +36,11 @@ let SystemAdminService = class SystemAdminService {
             return yield this.systemAdminRepository.findOneById(id);
         });
     }
+    getSystemAdminByUser(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.systemAdminRepository.findOne(options);
+        });
+    }
     addSystemAdmin(systemAdmin) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.systemAdminRepository.save(systemAdmin);

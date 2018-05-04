@@ -15,6 +15,7 @@ export class CommunityService implements ICommunityService{
     public async getCommunity(id:number):Promise<CommunityEntity|null>{
         return await this.communityRepository.findOneById(id);
     }
+
     public async addCommunity(InCommunity: ICommunity):Promise<CommunityEntity>{
         await this.communityRepository.save(InCommunity);
         const requestCommunity:ICommunity = await this.communityRepository.findOne({community:InCommunity.community});

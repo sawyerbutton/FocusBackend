@@ -47,7 +47,7 @@ export class CommunityController {
         return msg;
     }
 
-    @Get('/city/:id')
+    @Get('city/:id')
     @Roles('systemAdmin','stateAdmin','communityAdmin')
     public async getCommunityByCity(@Param() params){
         const msg = await this.communityService.getCommunityByCity(params.id);

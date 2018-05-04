@@ -28,20 +28,20 @@ export class StateAdminController {
     }
 
     @Post()
-    @Roles('systemAdmin','stateAdmin')
+    @Roles('systemAdmin')
     public async addStateAdmin(@Body() stateAdmin:CreateStateAdminDto){
         const msg = await this.stateAdminService.addStateAdmin(stateAdmin);
     }
 
     @Patch(':id')
-    @Roles('systemAdmin','stateAdmin')
+    @Roles('systemAdmin')
     public async updateStateAdmin(@Param() params,@Body() newStateAdmin:CreateStateAdminDto){
         const msg = await this.stateAdminService.updateStateAdmin(params.id,newStateAdmin);
         return msg;
     }
 
     @Delete(':id')
-    @Roles('systemAdmin','stateAdmin')
+    @Roles('systemAdmin')
     public async deleteStateAdmin(@Param() params){
         const msg = await this.stateAdminService.deleteStateAdmin(params.id);
         return msg;
