@@ -132,6 +132,7 @@ export class AuthService {
         if(user){
             return true;
         }else{
+            // console.log('user does not exist');
             return false;
         }
     }

@@ -72,6 +72,11 @@ let QuestionnaireController = class QuestionnaireController {
             return msg;
         });
     }
+    calculateDomain() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.questionnaireService.calculateDomainMaxAndMin();
+        });
+    }
 };
 __decorate([
     common_1.Get(),
@@ -128,6 +133,12 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], QuestionnaireController.prototype, "getAllQuestionnaireByDomain", null);
+__decorate([
+    common_1.Get('calculate'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], QuestionnaireController.prototype, "calculateDomain", null);
 QuestionnaireController = __decorate([
     common_1.Controller('questionnaire'),
     common_2.UseGuards(roles_guard_1.RolesGuard),

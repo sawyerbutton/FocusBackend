@@ -66,6 +66,12 @@ let SessionController = class SessionController {
             return msg;
         });
     }
+    getSessionScore(params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const msg = yield this.sessionService.calculateScore(params.id);
+            return msg;
+        });
+    }
 };
 __decorate([
     common_1.Get(),
@@ -114,6 +120,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], SessionController.prototype, "deleteSession", null);
+__decorate([
+    common_1.Get('score/:id'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
+    __param(0, common_1.Param()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], SessionController.prototype, "getSessionScore", null);
 SessionController = __decorate([
     common_1.Controller('session'),
     common_2.UseGuards(roles_guard_1.RolesGuard),

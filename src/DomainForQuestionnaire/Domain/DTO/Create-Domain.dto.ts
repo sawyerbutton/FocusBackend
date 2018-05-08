@@ -15,4 +15,12 @@ export class CreateDomainDto {
 
     @ApiModelProperty()
     questionnaire:any;
+
+    @ApiModelProperty()
+    @IsInt()
+    maxScore:number;
+
+    @ApiModelProperty()
+    @IsInt()
+    minScore:number;
 }

@@ -24,6 +24,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const session_entity_1 = require("./session.entity");
 const answer_entity_1 = require("../Answer/answer.entity");
+const domain_entity_1 = require("../DomainForQuestionnaire/Domain/domain.entity");
 let SessionService = class SessionService {
     constructor(sessionRepository, answerRepository) {
         this.sessionRepository = sessionRepository;
@@ -89,6 +90,33 @@ let SessionService = class SessionService {
             else {
                 return 'delete success';
             }
+        });
+    }
+    calculateScore(sessionId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let result = [];
+            const selectedSession = yield typeorm_1.getRepository(session_entity_1.SessionEntity).createQueryBuilder("session")
+                .leftJoinAndSelect("session.answer", "answer")
+                .where("session.id = :id", { id: sessionId })
+                .getOne();
+            const selectedDomains = yield typeorm_1.getConnection().createQueryBuilder().select().from(domain_entity_1.DomainEntity, "domain").getMany();
+            yield selectedDomains.forEach((domainItem) => __awaiter(this, void 0, void 0, function* () {
+                let answersGroupByDomain = yield selectedSession.answer.filter((answer) => answer.domain === domainItem.domain);
+                let domainScore = 0;
+                yield answersGroupByDomain.forEach((item) => {
+                    domainScore += item.answer.point * item.weight;
+                });
+                let domainMax = domainItem.maxScore;
+                let domainMin = domainItem.minScore;
+                domainScore = parseFloat(((domainScore - domainMin) / (domainMax - domainMin)).toFixed(2));
+                yield result.push({ domain: domainItem.domain, score: domainScore });
+            }));
+            let overallScore = 0;
+            yield result.forEach((item) => {
+                overallScore += item.score;
+            });
+            yield result.push({ wellnessScore: overallScore });
+            return yield result;
         });
     }
 };

@@ -60,4 +60,9 @@ export class QuestionnaireController {
         const msg = await this.questionnaireService.getQuestionnaireByDomain(params.id);
         return msg;
     }
+
+    @Get('calculate')
+    public async calculateDomain(){
+        await this.questionnaireService.calculateDomainMaxAndMin();
+    }
 }

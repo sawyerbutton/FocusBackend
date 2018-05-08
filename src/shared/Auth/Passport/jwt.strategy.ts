@@ -23,6 +23,7 @@ export class JwtStrategy extends Strategy {
         //呼叫authService.validate()，會去撈表確認有無資料
         const requestRoute = req.originalUrl.substring(1);
         req.authInfo = payload;
+        console.log(payload);
         const isValid = await this.authService.validate(payload,requestRoute);
         if (!isValid) {
             return done('Unauthorized', false);

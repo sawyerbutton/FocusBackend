@@ -74,13 +74,13 @@ let QuestionnaireService = class QuestionnaireService {
     }
     deleteQuestionnaire(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.questionnaireRepository.deleteById(id);
-            const questionnaire = this.questionnaireRepository.findOneById(id);
-            if (questionnaire) {
-                return 'delete fail';
+            const seletedQuestionnaire = yield this.questionnaireRepository.findOneById(id);
+            if (seletedQuestionnaire) {
+                yield this.questionnaireRepository.deleteById(id);
+                return 'delete success';
             }
             else {
-                return 'delete success';
+                return 'delete fail';
             }
         });
     }
@@ -102,6 +102,38 @@ let QuestionnaireService = class QuestionnaireService {
                 yield resultSubDomains.push(subDomainWithQ);
             }
             return yield { selectedDomain, resultSubDomains };
+        });
+    }
+    calculateDomainMaxAndMin() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const selectedDomains = yield typeorm_1.getConnection().createQueryBuilder().select().from(domain_entity_1.DomainEntity, "domain").getMany();
+            let domains = yield selectedDomains.map((domain) => {
+                return { domain: domain.domain };
+            });
+            const questionnaires = yield typeorm_1.getRepository(questionnaire_entity_1.QuestionnaireEntity).createQueryBuilder("questionnaire")
+                .leftJoinAndSelect("questionnaire.domain", "domain")
+                .getMany();
+            yield domains.forEach((domainItem) => __awaiter(this, void 0, void 0, function* () {
+                let maxScore = 0;
+                let minScore = 0;
+                let questionnairesGroupByDomain = yield questionnaires.filter((q) => q.domain.domain === domainItem.domain);
+                yield questionnairesGroupByDomain.forEach((questionnaire) => __awaiter(this, void 0, void 0, function* () {
+                    let maxPoint;
+                    let minPoint;
+                    let array = [];
+                    questionnaire.options.forEach((option) => {
+                        array.push(option.point);
+                    });
+                    maxPoint = Math.max(...array);
+                    maxScore = maxPoint * questionnaire.weight;
+                    minPoint = Math.min(...array);
+                    minScore = minPoint * questionnaire.weight;
+                }));
+                yield typeorm_1.getConnection().createQueryBuilder().update(domain_entity_1.DomainEntity)
+                    .set({ maxScore: maxScore }).where("domain = :domain", { domain: domainItem.domain }).execute();
+                yield typeorm_1.getConnection().createQueryBuilder().update(domain_entity_1.DomainEntity)
+                    .set({ minScore: minScore }).where("domain = :domain", { domain: domainItem.domain }).execute();
+            }));
         });
     }
 };

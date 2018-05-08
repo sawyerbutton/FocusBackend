@@ -9,8 +9,14 @@ export class AnswerEntity {
     @Column()
     questionid:number;
 
+    @Column('jsonb')
+    answer:any;
+
     @Column()
-    answer:string;
+    domain:string;
+
+    @Column()
+    weight:number;
 
     @ManyToOne(type => SessionEntity,session=>session.answer)
     session:SessionEntity;

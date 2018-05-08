@@ -15,4 +15,12 @@ export class CreateAnswerDto {
 
     @ApiModelProperty()
     session:any;
+
+    @ApiModelProperty()
+    @IsInt()
+    weight:number;
+
+    @ApiModelProperty()
+    @IsString()
+    domain:string
 }

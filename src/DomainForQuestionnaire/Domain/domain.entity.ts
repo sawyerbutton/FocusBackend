@@ -15,4 +15,10 @@ export class DomainEntity {
 
     @OneToMany(type => QuestionnaireEntity,questionnaire=>questionnaire.domain)
     questionnaire:QuestionnaireEntity[];
+
+    @Column()
+    maxScore:number;
+
+    @Column()
+    minScore:number;
 }

@@ -31,5 +31,15 @@ __decorate([
     swagger_1.ApiModelProperty(),
     __metadata("design:type", Object)
 ], CreateAnswerDto.prototype, "session", void 0);
+__decorate([
+    swagger_1.ApiModelProperty(),
+    class_validator_1.IsInt(),
+    __metadata("design:type", Number)
+], CreateAnswerDto.prototype, "weight", void 0);
+__decorate([
+    swagger_1.ApiModelProperty(),
+    class_validator_1.IsString(),
+    __metadata("design:type", String)
+], CreateAnswerDto.prototype, "domain", void 0);
 exports.CreateAnswerDto = CreateAnswerDto;
 //# sourceMappingURL=create-Answer.dto.js.map

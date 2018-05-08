@@ -53,4 +53,11 @@ export class SessionController {
         const msg = await this.sessionService.deleteSession(params.id);
         return msg;
     }
+
+    @Get('score/:id')
+    @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
+    public async getSessionScore(@Param() params){
+        const msg = await this.sessionService.calculateScore(params.id);
+        return msg;
+    }
 }

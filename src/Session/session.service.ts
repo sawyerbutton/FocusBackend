@@ -3,6 +3,8 @@ import {Repository, getRepository, getConnection} from 'typeorm';
 import {ISessionService,ISession} from "./Interfaces";
 import {SessionEntity} from "./session.entity";
 import {AnswerEntity} from "../Answer/answer.entity";
+import {DomainEntity} from "../DomainForQuestionnaire/Domain/domain.entity";
+import {async} from "rxjs/scheduler/async";
 
 @Component()
 export class SessionService implements ISessionService{
@@ -70,5 +72,39 @@ export class SessionService implements ISessionService{
         }else{
             return 'delete success';
         }
+    }
+
+    public async calculateScore(sessionId:number):Promise<Array<object>>{
+        let result = [];
+        const selectedSession = await getRepository(SessionEntity).createQueryBuilder("session")
+            .leftJoinAndSelect("session.answer","answer")
+            .where("session.id = :id",{id:sessionId})
+            .getOne();
+        const selectedDomains = await getConnection().createQueryBuilder().select().from(DomainEntity,"domain").getMany();
+        // let domains = await selectedDomains.map((domain)=>{
+        //     return {domain:domain.domain};
+        // });
+        await selectedDomains.forEach(async(domainItem)=>{
+            let answersGroupByDomain = await selectedSession.answer.filter((answer)=> answer.domain === domainItem.domain);
+            let domainScore:number = 0;
+            // let domainResult = await answersGroupByDomain.map((item)=>{
+            //     domainScore+= item.answer.point * item.weight;
+            //     return {domain:domainItem.domain,score:domainScore};
+            // });
+            // await result.push(domainResult);
+            await answersGroupByDomain.forEach((item)=>{
+                domainScore += item.answer.point * item.weight;
+            })
+            let domainMax:number = domainItem.maxScore;
+            let domainMin:number = domainItem.minScore;
+            domainScore = parseFloat(((domainScore-domainMin)/(domainMax-domainMin)).toFixed(2));
+            await result.push({domain:domainItem.domain,score:domainScore});
+        });
+        let overallScore:number = 0;
+        await result.forEach((item) => {
+           overallScore += item.score;
+        })
+        await result.push({wellnessScore:overallScore});
+        return await result;
     }
 }

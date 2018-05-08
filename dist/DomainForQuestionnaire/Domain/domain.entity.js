@@ -30,6 +30,14 @@ __decorate([
     typeorm_1.OneToMany(type => questionnaire_entity_1.QuestionnaireEntity, questionnaire => questionnaire.domain),
     __metadata("design:type", Array)
 ], DomainEntity.prototype, "questionnaire", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], DomainEntity.prototype, "maxScore", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], DomainEntity.prototype, "minScore", void 0);
 DomainEntity = __decorate([
     typeorm_1.Entity()
 ], DomainEntity);

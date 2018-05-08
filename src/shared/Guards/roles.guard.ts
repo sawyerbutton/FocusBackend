@@ -25,6 +25,7 @@ export class RolesGuard implements CanActivate {
         // return user && user.roles && hasRole();
         //req now can fix the roles guard problem
         const user = req.user;
+        // console.log(req);
         const hasRole = () => !!roles.find((item)=> item === user.role);
         return user && user.role && hasRole();
     }

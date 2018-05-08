@@ -31,5 +31,15 @@ __decorate([
     swagger_1.ApiModelProperty(),
     __metadata("design:type", Object)
 ], CreateDomainDto.prototype, "questionnaire", void 0);
+__decorate([
+    swagger_1.ApiModelProperty(),
+    class_validator_1.IsInt(),
+    __metadata("design:type", Number)
+], CreateDomainDto.prototype, "maxScore", void 0);
+__decorate([
+    swagger_1.ApiModelProperty(),
+    class_validator_1.IsInt(),
+    __metadata("design:type", Number)
+], CreateDomainDto.prototype, "minScore", void 0);
 exports.CreateDomainDto = CreateDomainDto;
 //# sourceMappingURL=Create-Domain.dto.js.map

@@ -3,4 +3,6 @@ export interface IAnswer {
     readonly questionid:number;
     readonly answer:any;
     readonly session:any;
+    readonly weight:number;
+    readonly domain:string;
 }

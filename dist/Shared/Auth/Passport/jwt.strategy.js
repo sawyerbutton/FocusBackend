@@ -35,6 +35,7 @@ let JwtStrategy = class JwtStrategy extends passport_jwt_1.Strategy {
         return __awaiter(this, void 0, void 0, function* () {
             const requestRoute = req.originalUrl.substring(1);
             req.authInfo = payload;
+            console.log(payload);
             const isValid = yield this.authService.validate(payload, requestRoute);
             if (!isValid) {
                 return done('Unauthorized', false);

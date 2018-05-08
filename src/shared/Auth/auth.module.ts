@@ -29,6 +29,26 @@ import { communityMemberProvider} from "../../CommunityMembers/communityMember.p
 import { BhcoService} from "../../Bhco/bhco.service";
 import { BhcoController} from "../../Bhco/bhco.controller";
 import { bhcoProvider} from "../../Bhco/bhco.providers";
+//answer
+import { AnswerController} from "../../Answer/answer.controller";
+import { AnswerService} from "../../Answer/answer.service";
+import { answerProvider} from "../../Answer/answer.providers";
+//block
+import { BlockController} from "../../Block/block.controller";
+import { BlockService} from "../../Block/block.service";
+import { blockProvider} from "../../Block/block.providers";
+//questionnaire
+import { QuestionnaireService} from "../../Questionnaire/questionnaire.service";
+import { QuestionnaireController} from "../../Questionnaire/questionnaire.controller";
+import { questionnaireProvider} from "../../Questionnaire/questionnaire.providers";
+//session
+import { SessionService} from "../../Session/session.service";
+import { SessionController} from "../../Session/session.controller";
+import { sessionProvider} from "../../Session/session.providers";
+//domain
+import { DomainController} from "../../DomainForQuestionnaire/Domain/domain.controller";
+import { DomainService} from "../../DomainForQuestionnaire/Domain/domain.service";
+import { domainProvider} from "../../DomainForQuestionnaire/Domain/domain.providers";
 
 @Module({
     modules:[DatabaseModule],
@@ -39,13 +59,21 @@ import { bhcoProvider} from "../../Bhco/bhco.providers";
         StateAdminService,stateAdminProvider,
         CommunityAdminService,communityAdminProvider,
         CommunityMemberService,communityMemberProvider,
-        BhcoService,bhcoProvider
+        BhcoService,bhcoProvider,
+        AnswerService,answerProvider,
+        BlockService,blockProvider,
+        QuestionnaireService,questionnaireProvider,
+        SessionService,sessionProvider,
+        domainProvider,DomainService
 
     ],
     controllers:[
         AuthController,SystemAdminController,
         StateAdminController,CommunityAdminController,
-        CommunityMemberController,BhcoController
+        CommunityMemberController,BhcoController,
+        AnswerController,BlockController,
+        QuestionnaireController,SessionController,
+        DomainController
     ]
 })
 
@@ -56,10 +84,21 @@ export class AuthModule implements NestModule {
         consumer.apply(passport.authenticate('jwt', { session: false }))
             .forRoutes(
                 { path: '/systemAdmin', method: RequestMethod.ALL },
-                {path:'/stateAdmin',method:RequestMethod.ALL},
-                {path:'/communityAdmin',method:RequestMethod.ALL},
-                {path:'/communityMember',method:RequestMethod.ALL},
-                {path:'/bhco',method:RequestMethod.ALL},
+                {path:'/stateAdmin*',method:RequestMethod.ALL},
+                {path:'/communityAdmin*',method:RequestMethod.ALL},
+                {path:'/communityMember*',method:RequestMethod.ALL},
+                {path:'/bhco*',method:RequestMethod.ALL},
+                {path:'/answer*',method:RequestMethod.ALL},
+                {path:'/block*',method:RequestMethod.ALL},
+                {path:'/city*',method:RequestMethod.ALL},
+                {path:'/community*',method:RequestMethod.ALL},
+                {path:'/county*',method:RequestMethod.ALL},
+                {path:'/demographic*',method:RequestMethod.ALL},
+                {path:'/family*',method:RequestMethod.ALL},
+                {path:'/questionnaire*',method:RequestMethod.ALL},
+                {path:'/session*',method:RequestMethod.ALL},
+                {path:'/state*',method:RequestMethod.ALL},
+                {path:'/domain*',method:RequestMethod.ALL}
             );
     }
 }
