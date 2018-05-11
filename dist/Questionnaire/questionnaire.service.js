@@ -107,13 +107,10 @@ let QuestionnaireService = class QuestionnaireService {
     calculateDomainMaxAndMin() {
         return __awaiter(this, void 0, void 0, function* () {
             const selectedDomains = yield typeorm_1.getConnection().createQueryBuilder().select().from(domain_entity_1.DomainEntity, "domain").getMany();
-            let domains = yield selectedDomains.map((domain) => {
-                return { domain: domain.domain };
-            });
             const questionnaires = yield typeorm_1.getRepository(questionnaire_entity_1.QuestionnaireEntity).createQueryBuilder("questionnaire")
                 .leftJoinAndSelect("questionnaire.domain", "domain")
                 .getMany();
-            yield domains.forEach((domainItem) => __awaiter(this, void 0, void 0, function* () {
+            yield selectedDomains.forEach((domainItem) => __awaiter(this, void 0, void 0, function* () {
                 let maxScore = 0;
                 let minScore = 0;
                 let questionnairesGroupByDomain = yield questionnaires.filter((q) => q.domain.domain === domainItem.domain);

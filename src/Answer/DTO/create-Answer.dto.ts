@@ -22,5 +22,5 @@ export class CreateAnswerDto {
 
     @ApiModelProperty()
     @IsString()
-    domain:string
+    domain:string;
 }

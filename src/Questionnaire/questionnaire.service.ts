@@ -87,13 +87,10 @@ export class QuestionnaireService implements IQuestionnaireService{
 
     public async calculateDomainMaxAndMin(){
         const selectedDomains = await getConnection().createQueryBuilder().select().from(DomainEntity,"domain").getMany();
-        let domains = await selectedDomains.map((domain)=>{
-            return {domain:domain.domain};
-        });
         const questionnaires = await getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
             .leftJoinAndSelect("questionnaire.domain","domain")
             .getMany();
-        await domains.forEach(async(domainItem)=>{
+        await selectedDomains.forEach(async(domainItem)=>{
             let maxScore:number = 0;
             let minScore:number = 0;
             let questionnairesGroupByDomain = await questionnaires.filter((q)=>q.domain.domain === domainItem.domain);
