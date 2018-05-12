@@ -36,9 +36,12 @@ let UserDemographicService = class UserDemographicService {
             return yield this.userDemographicRepository.findOneById(id);
         });
     }
-    addUserDemographic(userDemographic) {
+    addUserDemographic(userDemographics) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.userDemographicRepository.save(userDemographic);
+            yield userDemographics.forEach((userDemographic) => __awaiter(this, void 0, void 0, function* () {
+                yield this.userDemographicRepository.save(userDemographic);
+            }));
+            return true;
         });
     }
     updateUserDemographic(id, newUserDemographic) {

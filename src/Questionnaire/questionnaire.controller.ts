@@ -61,8 +61,8 @@ export class QuestionnaireController {
         return msg;
     }
 
-    @Get('calculate')
-    public async calculateDomain(){
+    @Get('/calculate/:id')
+    public async calculateDomain(@Param() params){
         await this.questionnaireService.calculateDomainMaxAndMin();
     }
 }
