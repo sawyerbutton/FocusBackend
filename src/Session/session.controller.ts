@@ -33,7 +33,7 @@ export class SessionController {
         return msg;
     }
 
-    @Patch()
+    @Patch('addSession/:id')
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async addSession(@Body() session:CreateSessionDto,@Param() params){
         const msg = await this.sessionService.addSession(params.id,session);

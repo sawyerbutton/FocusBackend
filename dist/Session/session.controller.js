@@ -103,7 +103,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SessionController.prototype, "getSessionById", null);
 __decorate([
-    common_1.Patch(),
+    common_1.Patch('addSession/:id'),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Body()), __param(1, common_1.Param()),
     __metadata("design:type", Function),
