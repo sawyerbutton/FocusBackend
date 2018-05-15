@@ -122,7 +122,7 @@ let SessionService = class SessionService {
             yield result.forEach((item) => {
                 overallScore += item.score;
             });
-            yield result.push({ wellnessScore: overallScore });
+            yield result.push({ domain: 'WellnessScore', score: overallScore });
             return yield result;
         });
     }

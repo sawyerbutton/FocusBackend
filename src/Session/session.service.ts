@@ -112,7 +112,7 @@ export class SessionService implements ISessionService{
         await result.forEach((item) => {
            overallScore += item.score;
         })
-        await result.push({wellnessScore:overallScore});
+        await result.push({domain:'WellnessScore',score:overallScore});
         return await result;
     }
 }
