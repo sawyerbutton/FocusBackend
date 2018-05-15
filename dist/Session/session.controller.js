@@ -135,7 +135,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SessionController.prototype, "getSessionScore", null);
 __decorate([
-    common_1.Post('createSession'),
+    common_1.Post(),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),

@@ -61,7 +61,7 @@ export class SessionController {
         return msg;
     }
 
-    @Post('createSession')
+    @Post()
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async createSession(@Body() session){
         const msg = await this.sessionService.createSession(session);
