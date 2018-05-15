@@ -48,9 +48,9 @@ let SessionController = class SessionController {
             return msg;
         });
     }
-    addSession(session) {
+    addSession(session, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const msg = yield this.sessionService.addSession(session);
+            const msg = yield this.sessionService.addSession(params.id, session);
             return msg;
         });
     }
@@ -69,6 +69,12 @@ let SessionController = class SessionController {
     getSessionScore(params) {
         return __awaiter(this, void 0, void 0, function* () {
             const msg = yield this.sessionService.calculateScore(params.id);
+            return msg;
+        });
+    }
+    createSession(session) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const msg = yield this.sessionService.createSession(session);
             return msg;
         });
     }
@@ -97,11 +103,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SessionController.prototype, "getSessionById", null);
 __decorate([
-    common_1.Post(),
+    common_1.Patch(),
     roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
-    __param(0, common_1.Body()),
+    __param(0, common_1.Body()), __param(1, common_1.Param()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_Session_dto_1.CreateSessionDto]),
+    __metadata("design:paramtypes", [create_Session_dto_1.CreateSessionDto, Object]),
     __metadata("design:returntype", Promise)
 ], SessionController.prototype, "addSession", null);
 __decorate([
@@ -128,6 +134,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], SessionController.prototype, "getSessionScore", null);
+__decorate([
+    common_1.Post('createSession'),
+    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], SessionController.prototype, "createSession", null);
 SessionController = __decorate([
     common_1.Controller('session'),
     common_2.UseGuards(roles_guard_1.RolesGuard),

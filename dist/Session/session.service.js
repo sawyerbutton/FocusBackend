@@ -45,10 +45,16 @@ let SessionService = class SessionService {
             return yield this.sessionRepository.findOneById(id);
         });
     }
-    addSession(session) {
+    createSession(session) {
         return __awaiter(this, void 0, void 0, function* () {
-            const selectedSession = yield this.sessionRepository.save(session);
-            for (let answer of yield session.answer) {
+            return yield this.sessionRepository.save(session);
+        });
+    }
+    addSession(sessionId, session) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const selectedSession = yield this.sessionRepository.findOneById(sessionId);
+            console.log(selectedSession);
+            for (let answer of session.answer) {
                 const selectedAnswer = yield this.answerRepository.save(answer);
                 yield typeorm_1.getConnection().createQueryBuilder().relation(answer_entity_1.AnswerEntity, "session")
                     .of(selectedAnswer.id).set(selectedSession.id);
@@ -99,18 +105,19 @@ let SessionService = class SessionService {
                 .leftJoinAndSelect("session.answer", "answer")
                 .where("session.id = :id", { id: sessionId })
                 .getOne();
-            const selectedDomains = yield typeorm_1.getConnection().createQueryBuilder().select().from(domain_entity_1.DomainEntity, "domain").getMany();
-            yield selectedDomains.forEach((domainItem) => __awaiter(this, void 0, void 0, function* () {
-                let answersGroupByDomain = yield selectedSession.answer.filter((answer) => answer.domain === domainItem.domain);
+            const selectedDomains = yield typeorm_1.getConnection().getRepository(domain_entity_1.DomainEntity).createQueryBuilder("domain").getMany();
+            yield selectedDomains.forEach((domainItem) => {
+                let answersGroupByDomain = selectedSession.answer.filter((answer) => answer.domain === domainItem.domain);
                 let domainScore = 0;
-                yield answersGroupByDomain.forEach((item) => {
+                answersGroupByDomain.forEach((item) => {
                     domainScore += item.answer.point * item.weight;
                 });
                 let domainMax = domainItem.maxScore;
                 let domainMin = domainItem.minScore;
                 domainScore = parseFloat(((domainScore - domainMin) / (domainMax - domainMin)).toFixed(2));
-                yield result.push({ domain: domainItem.domain, score: domainScore });
-            }));
+                domainScore = domainScore < 0 ? 0 : domainScore;
+                result.push({ domain: domainItem.domain, score: domainScore });
+            });
             let overallScore = 0;
             yield result.forEach((item) => {
                 overallScore += item.score;

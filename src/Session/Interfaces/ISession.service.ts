@@ -5,7 +5,7 @@ export interface ISessionService {
     getAllSession():Promise<Array<SessionEntity>>;
     getSessionByUserId(userId:number):Promise<Array<SessionEntity>>;
     getSessionById(id:number):Promise<SessionEntity|null>;
-    addSession(session:ISession):Promise<SessionEntity>;
+    addSession(sessionId:number,session:ISession):Promise<SessionEntity>;
     updateSession(id:number,newSession:ISession):Promise<SessionEntity|null>;
     deleteSession(id:number):Promise<string>;
 }

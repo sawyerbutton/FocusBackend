@@ -33,10 +33,10 @@ export class SessionController {
         return msg;
     }
 
-    @Post()
+    @Patch()
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
-    public async addSession(@Body() session:CreateSessionDto){
-        const msg = await this.sessionService.addSession(session);
+    public async addSession(@Body() session:CreateSessionDto,@Param() params){
+        const msg = await this.sessionService.addSession(params.id,session);
         return msg;
     }
 
@@ -58,6 +58,13 @@ export class SessionController {
     @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
     public async getSessionScore(@Param() params){
         const msg = await this.sessionService.calculateScore(params.id);
+        return msg;
+    }
+
+    @Post('createSession')
+    @Roles('systemAdmin','stateAdmin','communityAdmin','bhco')
+    public async createSession(@Body() session){
+        const msg = await this.sessionService.createSession(session);
         return msg;
     }
 }

@@ -25,9 +25,15 @@ export class SessionService implements ISessionService{
         return await this.sessionRepository.findOneById(id);
     }
 
-    public async addSession(session:ISession):Promise<SessionEntity>{
-        const selectedSession = await this.sessionRepository.save(session);
-        for(let answer of await session.answer){
+    public async createSession(session:ISession):Promise<SessionEntity>{
+        // const fakeSession = {id:0,userid:0,createdate:0,updatedate:0};
+        return await this.sessionRepository.save(session);
+    }
+
+    public async addSession(sessionId:number,session:ISession):Promise<SessionEntity>{
+        const selectedSession = await this.sessionRepository.findOneById(sessionId);
+        console.log(selectedSession);
+        for(let answer of session.answer){
             const selectedAnswer = await this.answerRepository.save(answer);
             await getConnection().createQueryBuilder().relation(AnswerEntity,"session")
                 .of(selectedAnswer.id).set(selectedSession.id);
@@ -80,25 +86,27 @@ export class SessionService implements ISessionService{
             .leftJoinAndSelect("session.answer","answer")
             .where("session.id = :id",{id:sessionId})
             .getOne();
-        const selectedDomains = await getConnection().createQueryBuilder().select().from(DomainEntity,"domain").getMany();
-        // let domains = await selectedDomains.map((domain)=>{
-        //     return {domain:domain.domain};
-        // });
-        await selectedDomains.forEach(async(domainItem)=>{
-            let answersGroupByDomain = await selectedSession.answer.filter((answer)=> answer.domain === domainItem.domain);
+
+        const selectedDomains = await getConnection().getRepository(DomainEntity).createQueryBuilder("domain").getMany();
+
+        await selectedDomains.forEach((domainItem)=>{
+            // console.log(domainItem);
+            let answersGroupByDomain =  selectedSession.answer.filter((answer)=> answer.domain === domainItem.domain);
+            // console.log(answersGroupByDomain);
+            //correct
             let domainScore:number = 0;
-            // let domainResult = await answersGroupByDomain.map((item)=>{
-            //     domainScore+= item.answer.point * item.weight;
-            //     return {domain:domainItem.domain,score:domainScore};
-            // });
-            // await result.push(domainResult);
-            await answersGroupByDomain.forEach((item)=>{
+
+            answersGroupByDomain.forEach((item)=>{
                 domainScore += item.answer.point * item.weight;
+                // console.log(domainScore);
             })
+
             let domainMax:number = domainItem.maxScore;
             let domainMin:number = domainItem.minScore;
             domainScore = parseFloat(((domainScore-domainMin)/(domainMax-domainMin)).toFixed(2));
-            await result.push({domain:domainItem.domain,score:domainScore});
+            // console.log(domainScore);
+            domainScore = domainScore<0?0:domainScore;
+            result.push({domain:domainItem.domain,score:domainScore});
         });
         let overallScore:number = 0;
         await result.forEach((item) => {

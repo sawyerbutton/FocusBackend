@@ -124,9 +124,9 @@ let QuestionnaireService = class QuestionnaireService {
                         array.push(option.point);
                     });
                     maxPoint = Math.max(...array);
-                    maxScore = Math.max(maxPoint * questionnaire.weight, maxScore);
+                    maxScore += maxPoint * questionnaire.weight;
                     minPoint = Math.min(...array);
-                    minScore = Math.min(minPoint * questionnaire.weight, minScore);
+                    minScore += minPoint * questionnaire.weight;
                 }));
                 yield typeorm_1.getConnection().createQueryBuilder().update(domain_entity_1.DomainEntity)
                     .set({ maxScore: maxScore }).where("domain = :domain", { domain: domainItem.domain }).execute();
