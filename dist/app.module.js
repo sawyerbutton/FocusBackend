@@ -26,6 +26,7 @@ const subDomain_module_1 = require("./DomainForQuestionnaire/SubDomain/subDomain
 const session_module_1 = require("./Session/session.module");
 const answer_module_1 = require("./Answer/answer.module");
 const auth_module_1 = require("./shared/Auth/auth.module");
+const scoreCommunity_module_1 = require("./ScoreCommunity/scoreCommunity.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -49,7 +50,8 @@ AppModule = __decorate([
             subDomain_module_1.SubDomainModule,
             session_module_1.SessionModule,
             answer_module_1.AnswerModule,
-            auth_module_1.AuthModule
+            auth_module_1.AuthModule,
+            scoreCommunity_module_1.ScoreCommunityModule
         ]
     })
 ], AppModule);

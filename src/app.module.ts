@@ -21,6 +21,7 @@ import {SubDomainModule} from "./DomainForQuestionnaire/SubDomain/subDomain.modu
 import {SessionModule} from "./Session/session.module";
 import {AnswerModule} from "./Answer/answer.module";
 import {AuthModule} from "./shared/Auth/auth.module";
+import {ScoreCommunityModule} from "./ScoreCommunity/scoreCommunity.module";
 
 @Module({
   modules:[
@@ -42,7 +43,8 @@ import {AuthModule} from "./shared/Auth/auth.module";
       SubDomainModule,
       SessionModule,
       AnswerModule,
-      AuthModule
+      AuthModule,
+      ScoreCommunityModule
   ]
 })
 
