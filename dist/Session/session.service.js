@@ -84,6 +84,7 @@ let SessionService = class SessionService {
                 .createQueryBuilder("session").leftJoinAndSelect("session.answer", "answer")
                 .where("session.id = :id", { id: sessionId })
                 .getOne();
+            const userId = yield selectedSession.userid;
             for (let answer of yield selectedSession.answer) {
                 yield typeorm_1.getConnection().createQueryBuilder().relation(answer_entity_1.AnswerEntity, "session")
                     .of(answer.id).set(null);
@@ -91,10 +92,10 @@ let SessionService = class SessionService {
             yield this.sessionRepository.deleteById(sessionId);
             const deletedSession = yield this.sessionRepository.findOneById(sessionId);
             if (deletedSession) {
-                return 'delete fail';
+                return yield this.sessionRepository.find({ where: { userid: userId } });
             }
             else {
-                return 'delete success';
+                return null;
             }
         });
     }

@@ -62,11 +62,12 @@ export class SessionService implements ISessionService{
         return await this.sessionRepository.findOneById(sessionId);
     }
 
-    public async deleteSession(sessionId:number):Promise<string>{
+    public async deleteSession(sessionId:number):Promise<Array<SessionEntity>>{
         const selectedSession = await getConnection().getRepository(SessionEntity)
             .createQueryBuilder("session").leftJoinAndSelect("session.answer","answer")
             .where("session.id = :id",{id:sessionId})
             .getOne();
+        const userId = await selectedSession.userid;
         for(let answer of await selectedSession.answer){
             await getConnection().createQueryBuilder().relation(AnswerEntity,"session")
                 .of(answer.id).set(null);
@@ -74,10 +75,11 @@ export class SessionService implements ISessionService{
         await this.sessionRepository.deleteById(sessionId);
         const deletedSession = await this.sessionRepository.findOneById(sessionId);
         if(deletedSession){
-            return 'delete fail';
+            return await this.sessionRepository.find({where:{userid:userId}});
         }else{
-            return 'delete success';
+            return null;
         }
+
     }
 
     public async calculateScore(sessionId:number):Promise<Array<object>>{
