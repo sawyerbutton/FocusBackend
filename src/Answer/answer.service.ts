@@ -65,6 +65,6 @@ export class AnswerService implements IAnswerService{
             .where("session.id = :id",{id:sessionId})
             .andWhere("answer.domain = :domain",{domain:selectedDomain.domain})
             .getMany();
-        return await selectedAnswer
+        return await selectedAnswer;
     }
 }
