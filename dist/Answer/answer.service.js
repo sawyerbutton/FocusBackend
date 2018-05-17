@@ -24,6 +24,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const answer_entity_1 = require("./answer.entity");
 const session_entity_1 = require("../Session/session.entity");
+const domain_entity_1 = require("../DomainForQuestionnaire/Domain/domain.entity");
 let AnswerService = class AnswerService {
     constructor(answerRepository) {
         this.answerRepository = answerRepository;
@@ -76,6 +77,22 @@ let AnswerService = class AnswerService {
                     .of(answer.id).set(null);
             }
             return 'delete success';
+        });
+    }
+    getAnswerByDomainAndSession(array) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sessionId = array[0];
+            const domainId = array[1];
+            const selectedDomain = yield typeorm_1.getConnection().getRepository(domain_entity_1.DomainEntity)
+                .createQueryBuilder("domain").leftJoinAndSelect("domain.subdomain", "subdomain")
+                .where("domain.id = :id", { id: domainId })
+                .getOne();
+            const selectedAnswer = yield typeorm_1.getConnection().getRepository(answer_entity_1.AnswerEntity).createQueryBuilder("answer")
+                .leftJoinAndSelect("answer.session", "session")
+                .where("session.id = :id", { id: sessionId })
+                .andWhere("answer.domain = :domain", { domain: selectedDomain.domain })
+                .getMany();
+            return yield selectedAnswer;
         });
     }
 };

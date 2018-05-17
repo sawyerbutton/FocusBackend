@@ -3,6 +3,7 @@ import {Repository, getRepository, getConnection} from 'typeorm';
 import {IAnswer,IAnswerService} from "./Interfaces";
 import {AnswerEntity} from "./answer.entity";
 import {SessionEntity} from "../Session/session.entity";
+import {DomainEntity} from "../DomainForQuestionnaire/Domain/domain.entity";
 
 @Component()
 export class AnswerService implements IAnswerService{
@@ -21,6 +22,8 @@ export class AnswerService implements IAnswerService{
             .createQueryBuilder("session").leftJoinAndSelect("session.answer","answer")
             .where("session.id = :id",{id:sessionId})
             .getOne();
+        // const userId = selectedSession.userid;
+
         return await selectedSession.answer;
     }
     public async addAnswer(sessionId:number,answers:IAnswer[]){
@@ -47,5 +50,21 @@ export class AnswerService implements IAnswerService{
                 .of(answer.id).set(null);
         }
         return 'delete success'
+    }
+
+    public async getAnswerByDomainAndSession(array:number[]):Promise<Array<AnswerEntity>>{
+        const sessionId = array[0];
+        const domainId = array[1];
+        const selectedDomain = await getConnection().getRepository(DomainEntity)
+            .createQueryBuilder("domain").leftJoinAndSelect("domain.subdomain","subdomain")
+            .where("domain.id = :id",{id:domainId})
+            .getOne();
+        // const domain = selectedDomain.domain;
+        const selectedAnswer = await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
+            .leftJoinAndSelect("answer.session","session")
+            .where("session.id = :id",{id:sessionId})
+            .andWhere("answer.domain = :domain",{domain:selectedDomain.domain})
+            .getMany();
+        return await selectedAnswer
     }
 }
