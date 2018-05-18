@@ -23,9 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const create_Block_dto_1 = require("./DTO/create-Block.dto");
 const block_service_1 = require("./block.service");
-const roles_decorator_1 = require("../shared/Guards/roles.decorator");
-const common_2 = require("@nestjs/common");
-const roles_guard_1 = require("../shared/Guards/roles.guard");
 let BlockController = class BlockController {
     constructor(blockService) {
         this.blockService = blockService;
@@ -69,14 +66,12 @@ let BlockController = class BlockController {
 };
 __decorate([
     common_1.Get(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BlockController.prototype, "getAllBlock", null);
 __decorate([
     common_1.Get(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -84,7 +79,6 @@ __decorate([
 ], BlockController.prototype, "getBlock", null);
 __decorate([
     common_1.Post(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_Block_dto_1.CreateBlockDto]),
@@ -92,7 +86,6 @@ __decorate([
 ], BlockController.prototype, "addBlock", null);
 __decorate([
     common_1.Patch(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_Block_dto_1.CreateBlockDto]),
@@ -100,7 +93,6 @@ __decorate([
 ], BlockController.prototype, "updateBlock", null);
 __decorate([
     common_1.Delete(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -108,7 +100,6 @@ __decorate([
 ], BlockController.prototype, "deleteBlock", null);
 __decorate([
     common_1.Get('community/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -116,7 +107,6 @@ __decorate([
 ], BlockController.prototype, "getBlockByCommunity", null);
 BlockController = __decorate([
     common_1.Controller('block'),
-    common_2.UseGuards(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [block_service_1.BlockService])
 ], BlockController);
 exports.BlockController = BlockController;

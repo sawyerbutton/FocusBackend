@@ -23,9 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const create_UserDemographic_dto_1 = require("./DTO/create-UserDemographic.dto");
 const userDemographic_service_1 = require("./userDemographic.service");
-const roles_decorator_1 = require("../shared/Guards/roles.decorator");
-const common_2 = require("@nestjs/common");
-const roles_guard_1 = require("../Shared/Guards/roles.guard");
 let UserDemographicController = class UserDemographicController {
     constructor(userDemographicService) {
         this.userDemographicService = userDemographicService;
@@ -63,14 +60,12 @@ let UserDemographicController = class UserDemographicController {
 };
 __decorate([
     common_1.Get(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserDemographicController.prototype, "getAllUserDemographic", null);
 __decorate([
     common_1.Get(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -78,7 +73,6 @@ __decorate([
 ], UserDemographicController.prototype, "getUserDemographic", null);
 __decorate([
     common_1.Post(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_UserDemographic_dto_1.CreateUserDemographicDto]),
@@ -86,7 +80,6 @@ __decorate([
 ], UserDemographicController.prototype, "addUserDemographic", null);
 __decorate([
     common_1.Patch(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_UserDemographic_dto_1.CreateUserDemographicDto]),
@@ -94,7 +87,6 @@ __decorate([
 ], UserDemographicController.prototype, "updateUserDemographic", null);
 __decorate([
     common_1.Delete(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -102,7 +94,6 @@ __decorate([
 ], UserDemographicController.prototype, "deleteUserDemographic", null);
 UserDemographicController = __decorate([
     common_1.Controller('userDemographic'),
-    common_2.UseGuards(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [userDemographic_service_1.UserDemographicService])
 ], UserDemographicController);
 exports.UserDemographicController = UserDemographicController;

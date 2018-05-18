@@ -23,7 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const create_Bhco_dto_1 = require("./DTO/create-Bhco.dto");
 const bhco_service_1 = require("./bhco.service");
-const roles_decorator_1 = require("../shared/Decorators/roles.decorator");
 let BhcoController = class BhcoController {
     constructor(bhcoService) {
         this.bhcoService = bhcoService;
@@ -73,14 +72,12 @@ let BhcoController = class BhcoController {
 };
 __decorate([
     common_1.Get('bhco'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BhcoController.prototype, "getAllBhco", null);
 __decorate([
     common_1.Get('Bhco/Community/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -88,7 +85,6 @@ __decorate([
 ], BhcoController.prototype, "getAllBhcoByCommunity", null);
 __decorate([
     common_1.Get('Bhco/State/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -103,7 +99,6 @@ __decorate([
 ], BhcoController.prototype, "addBhco", null);
 __decorate([
     common_1.Get('bhco/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -111,7 +106,6 @@ __decorate([
 ], BhcoController.prototype, "getBhco", null);
 __decorate([
     common_1.Patch('bhco/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_Bhco_dto_1.CreateBhcoDto]),
@@ -119,7 +113,6 @@ __decorate([
 ], BhcoController.prototype, "updateBhco", null);
 __decorate([
     common_1.Delete('bhco:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

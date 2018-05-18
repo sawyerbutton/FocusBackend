@@ -23,9 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const domain_service_1 = require("./domain.service");
 const Create_Domain_dto_1 = require("./DTO/Create-Domain.dto");
-const roles_decorator_1 = require("../../shared/Decorators/roles.decorator");
-const common_2 = require("@nestjs/common");
-const roles_guard_1 = require("../../shared/Guards/roles.guard");
 let DomainController = class DomainController {
     constructor(domainService) {
         this.domainService = domainService;
@@ -63,14 +60,12 @@ let DomainController = class DomainController {
 };
 __decorate([
     common_1.Get(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], DomainController.prototype, "getAllDomain", null);
 __decorate([
     common_1.Get(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -78,7 +73,6 @@ __decorate([
 ], DomainController.prototype, "getDomain", null);
 __decorate([
     common_1.Post(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Create_Domain_dto_1.CreateDomainDto]),
@@ -86,7 +80,6 @@ __decorate([
 ], DomainController.prototype, "addDomain", null);
 __decorate([
     common_1.Patch(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Create_Domain_dto_1.CreateDomainDto]),
@@ -94,7 +87,6 @@ __decorate([
 ], DomainController.prototype, "updateDomain", null);
 __decorate([
     common_1.Delete(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -102,7 +94,6 @@ __decorate([
 ], DomainController.prototype, "deleteDomain", null);
 DomainController = __decorate([
     common_1.Controller('domain'),
-    common_2.UseGuards(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [domain_service_1.DomainService])
 ], DomainController);
 exports.DomainController = DomainController;

@@ -23,9 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const create_State_dto_1 = require("./DTO/create-State.dto");
 const state_service_1 = require("./state.service");
-const common_2 = require("@nestjs/common");
-const roles_guard_1 = require("../Shared/Guards/roles.guard");
-const roles_decorator_1 = require("../shared/Guards/roles.decorator");
 let StateController = class StateController {
     constructor(stateService) {
         this.stateService = stateService;
@@ -63,14 +60,12 @@ let StateController = class StateController {
 };
 __decorate([
     common_1.Get(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], StateController.prototype, "getAllState", null);
 __decorate([
     common_1.Get(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -78,7 +73,6 @@ __decorate([
 ], StateController.prototype, "getState", null);
 __decorate([
     common_1.Post(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_State_dto_1.CreateStateDto]),
@@ -86,7 +80,6 @@ __decorate([
 ], StateController.prototype, "addState", null);
 __decorate([
     common_1.Patch(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_State_dto_1.CreateStateDto]),
@@ -94,7 +87,6 @@ __decorate([
 ], StateController.prototype, "updateState", null);
 __decorate([
     common_1.Delete(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -102,7 +94,6 @@ __decorate([
 ], StateController.prototype, "deleteState", null);
 StateController = __decorate([
     common_1.Controller('state'),
-    common_2.UseGuards(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [state_service_1.StateService])
 ], StateController);
 exports.StateController = StateController;

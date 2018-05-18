@@ -23,9 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const session_service_1 = require("./session.service");
 const create_Session_dto_1 = require("./DTO/create-Session.dto");
-const roles_decorator_1 = require("../shared/Guards/roles.decorator");
-const common_2 = require("@nestjs/common");
-const roles_guard_1 = require("../Shared/Guards/roles.guard");
 let SessionController = class SessionController {
     constructor(sessionService) {
         this.sessionService = sessionService;
@@ -69,14 +66,12 @@ let SessionController = class SessionController {
 };
 __decorate([
     common_1.Get(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SessionController.prototype, "getAllSession", null);
 __decorate([
     common_1.Get('/user/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -84,7 +79,6 @@ __decorate([
 ], SessionController.prototype, "getAllSessionByUserId", null);
 __decorate([
     common_1.Get(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -92,7 +86,6 @@ __decorate([
 ], SessionController.prototype, "getSessionById", null);
 __decorate([
     common_1.Post(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_Session_dto_1.CreateSessionDto]),
@@ -100,7 +93,6 @@ __decorate([
 ], SessionController.prototype, "addSession", null);
 __decorate([
     common_1.Patch(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_Session_dto_1.CreateSessionDto]),
@@ -108,7 +100,6 @@ __decorate([
 ], SessionController.prototype, "updateSession", null);
 __decorate([
     common_1.Delete(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -116,7 +107,6 @@ __decorate([
 ], SessionController.prototype, "deleteSession", null);
 SessionController = __decorate([
     common_1.Controller('session'),
-    common_2.UseGuards(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [session_service_1.SessionService])
 ], SessionController);
 exports.SessionController = SessionController;

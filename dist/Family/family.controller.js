@@ -23,9 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const family_service_1 = require("./family.service");
 const create_Family_dto_1 = require("./DTO/create-Family.dto");
-const roles_decorator_1 = require("../shared/Guards/roles.decorator");
-const common_2 = require("@nestjs/common");
-const roles_guard_1 = require("../Shared/Guards/roles.guard");
 let FamilyController = class FamilyController {
     constructor(familyService) {
         this.familyService = familyService;
@@ -69,14 +66,12 @@ let FamilyController = class FamilyController {
 };
 __decorate([
     common_1.Get(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], FamilyController.prototype, "getAllFamily", null);
 __decorate([
     common_1.Get(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -84,7 +79,6 @@ __decorate([
 ], FamilyController.prototype, "getFamily", null);
 __decorate([
     common_1.Post(),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_Family_dto_1.CreateFamilyDto]),
@@ -92,7 +86,6 @@ __decorate([
 ], FamilyController.prototype, "addFamily", null);
 __decorate([
     common_1.Patch(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_Family_dto_1.CreateFamilyDto]),
@@ -100,7 +93,6 @@ __decorate([
 ], FamilyController.prototype, "updateFamily", null);
 __decorate([
     common_1.Delete(':id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -108,7 +100,6 @@ __decorate([
 ], FamilyController.prototype, "deleteFamily", null);
 __decorate([
     common_1.Get('/block/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -116,7 +107,6 @@ __decorate([
 ], FamilyController.prototype, "getFamilyByBlock", null);
 FamilyController = __decorate([
     common_1.Controller('family'),
-    common_2.UseGuards(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [family_service_1.FamilyService])
 ], FamilyController);
 exports.FamilyController = FamilyController;

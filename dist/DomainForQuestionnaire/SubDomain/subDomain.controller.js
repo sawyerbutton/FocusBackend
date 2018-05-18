@@ -23,7 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const Create_SubDomain_dto_1 = require("./DTO/Create-SubDomain.dto");
 const subDomain_service_1 = require("./subDomain.service");
-const roles_decorator_1 = require("../../shared/Decorators/roles.decorator");
 let SubDomainController = class SubDomainController {
     constructor(subDomainService) {
         this.subDomainService = subDomainService;
@@ -73,14 +72,12 @@ let SubDomainController = class SubDomainController {
 };
 __decorate([
     common_1.Get('subDomain'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SubDomainController.prototype, "getAllSubDomain", null);
 __decorate([
     common_1.Get('subDomain/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -88,7 +85,6 @@ __decorate([
 ], SubDomainController.prototype, "getAllSubDomainByDomainID", null);
 __decorate([
     common_1.Patch('subDomain/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Create_SubDomain_dto_1.CreateSubDomainDto]),
@@ -96,7 +92,6 @@ __decorate([
 ], SubDomainController.prototype, "addSubDomain", null);
 __decorate([
     common_1.Patch('subDomain/update/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Create_SubDomain_dto_1.CreateSubDomainDto]),
@@ -104,7 +99,6 @@ __decorate([
 ], SubDomainController.prototype, "updateSubDomain", null);
 __decorate([
     common_1.Delete('subDomain/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -112,7 +106,6 @@ __decorate([
 ], SubDomainController.prototype, "deleteSubDomain", null);
 __decorate([
     common_1.Delete('subDomain/isolate/:id'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -120,7 +113,6 @@ __decorate([
 ], SubDomainController.prototype, "isolateSubDomain", null);
 __decorate([
     common_1.Get('isolatedSubDomain'),
-    roles_decorator_1.Roles('systemAdmin', 'stateAdmin', 'communityAdmin', 'bhco'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

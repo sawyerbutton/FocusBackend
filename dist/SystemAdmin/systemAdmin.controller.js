@@ -23,9 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const create_SystemAdmin_dto_1 = require("./DTO/create-SystemAdmin.dto");
 const systemAdmin_service_1 = require("./systemAdmin.service");
-const roles_decorator_1 = require("../shared/Guards/roles.decorator");
-const common_2 = require("@nestjs/common");
-const roles_guard_1 = require("../Shared/Guards/roles.guard");
 let SystemAdminController = class SystemAdminController {
     constructor(systemAdminService) {
         this.systemAdminService = systemAdminService;
@@ -63,14 +60,12 @@ let SystemAdminController = class SystemAdminController {
 };
 __decorate([
     common_1.Get(),
-    roles_decorator_1.Roles('systemAdmin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SystemAdminController.prototype, "getAllSystemAdmin", null);
 __decorate([
     common_1.Post(),
-    roles_decorator_1.Roles('systemAdmin'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_SystemAdmin_dto_1.CreateSystemAdminDto]),
@@ -78,7 +73,6 @@ __decorate([
 ], SystemAdminController.prototype, "addSystemAdmin", null);
 __decorate([
     common_1.Get(':id'),
-    roles_decorator_1.Roles('systemAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -86,7 +80,6 @@ __decorate([
 ], SystemAdminController.prototype, "getSystemAdmin", null);
 __decorate([
     common_1.Patch(':id'),
-    roles_decorator_1.Roles('systemAdmin'),
     __param(0, common_1.Body()), __param(1, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_SystemAdmin_dto_1.CreateSystemAdminDto, Object]),
@@ -94,7 +87,6 @@ __decorate([
 ], SystemAdminController.prototype, "updateSystemAdmin", null);
 __decorate([
     common_1.Delete(':id'),
-    roles_decorator_1.Roles('systemAdmin'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -102,7 +94,6 @@ __decorate([
 ], SystemAdminController.prototype, "deleteSystemAdmin", null);
 SystemAdminController = __decorate([
     common_1.Controller('systemAdmin'),
-    common_2.UseGuards(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [systemAdmin_service_1.SystemAdminService])
 ], SystemAdminController);
 exports.SystemAdminController = SystemAdminController;
