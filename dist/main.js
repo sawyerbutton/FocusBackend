@@ -12,6 +12,7 @@ const core_1 = require("@nestjs/core");
 const swagger_1 = require("@nestjs/swagger");
 const app_module_1 = require("./app.module");
 require("reflect-metadata");
+const port = process.env.PORT || 3000;
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = yield core_1.NestFactory.create(app_module_1.AppModule);
@@ -26,7 +27,7 @@ function bootstrap() {
             .build();
         const document = swagger_1.SwaggerModule.createDocument(app, options);
         swagger_1.SwaggerModule.setup('/api', app, document);
-        yield app.listen(3000);
+        yield app.listen(port);
     });
 }
 bootstrap();
