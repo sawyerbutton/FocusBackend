@@ -22,6 +22,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
+const userDemographic_entity_1 = require("./userDemographic.entity");
+const demographic_entity_1 = require("../Demographic/demographic.entity");
 let UserDemographicService = class UserDemographicService {
     constructor(userDemographicRepository) {
         this.userDemographicRepository = userDemographicRepository;
@@ -61,6 +63,14 @@ let UserDemographicService = class UserDemographicService {
             else {
                 return 'delete success';
             }
+        });
+    }
+    getDemographicAnswerByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield typeorm_1.getConnection().getRepository(userDemographic_entity_1.UserDemographicEntity).createQueryBuilder("userDemographic")
+                .leftJoinAndSelect(demographic_entity_1.DemographicEntity, "demographic", "demographic.id = userDemographic.questionid")
+                .where("userDemographic.userid = :id", { id: userId })
+                .getMany();
         });
     }
 };

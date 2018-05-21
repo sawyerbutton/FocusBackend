@@ -2,6 +2,7 @@ import { Component ,Inject} from "@nestjs/common";
 import { Repository } from 'typeorm';
 import { StateEntity} from "./state.entity";
 import { IState,IStateService} from "./Interfaces";
+// import {async} from "rxjs/scheduler/async";
 
 @Component()
 export class StateService implements IStateService{
@@ -18,6 +19,13 @@ export class StateService implements IStateService{
     public async addState(state:IState):Promise<StateEntity>{
         return await this.stateRepository.save(state);
     }
+
+    public async addAllState(state:IState[]){
+        await state.forEach(async(state)=> {
+            await this.stateRepository.save(state);
+        })
+    }
+
     public async updateState(id:number,newState:IState):Promise<StateEntity>{
         const state = await this.stateRepository.findOneById(id);
         if(!state){

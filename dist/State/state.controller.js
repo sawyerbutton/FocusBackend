@@ -39,12 +39,6 @@ let StateController = class StateController {
             return msg;
         });
     }
-    addState(state) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const msg = yield this.stateService.addState(state);
-            return msg;
-        });
-    }
     updateState(params, newState) {
         return __awaiter(this, void 0, void 0, function* () {
             const msg = yield this.stateService.updateState(params.id, newState);
@@ -55,6 +49,11 @@ let StateController = class StateController {
         return __awaiter(this, void 0, void 0, function* () {
             const msg = yield this.stateService.deleteState(params.id);
             return msg;
+        });
+    }
+    addAllState(state) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const msg = yield this.stateService.addAllState(state);
         });
     }
 };
@@ -72,13 +71,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], StateController.prototype, "getState", null);
 __decorate([
-    common_1.Post(),
-    __param(0, common_1.Body()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_State_dto_1.CreateStateDto]),
-    __metadata("design:returntype", Promise)
-], StateController.prototype, "addState", null);
-__decorate([
     common_1.Patch(':id'),
     __param(0, common_1.Param()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
@@ -92,6 +84,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], StateController.prototype, "deleteState", null);
+__decorate([
+    common_1.Post(),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Array]),
+    __metadata("design:returntype", Promise)
+], StateController.prototype, "addAllState", null);
 StateController = __decorate([
     common_1.Controller('state'),
     __metadata("design:paramtypes", [state_service_1.StateService])

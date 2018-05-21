@@ -41,6 +41,13 @@ let StateService = class StateService {
             return yield this.stateRepository.save(state);
         });
     }
+    addAllState(state) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield state.forEach((state) => __awaiter(this, void 0, void 0, function* () {
+                yield this.stateRepository.save(state);
+            }));
+        });
+    }
     updateState(id, newState) {
         return __awaiter(this, void 0, void 0, function* () {
             const state = yield this.stateRepository.findOneById(id);

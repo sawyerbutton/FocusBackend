@@ -46,4 +46,9 @@ export class UserDemographicController{
         const msg = await this.userDemographicService.deleteUserDemographic(params.id);
         return msg;
     }
+    @Get('user/:id')
+    public async getUserDemographicByUserId(@Param() params){
+        const msg = await this.userDemographicService.getDemographicAnswerByUserId(params.id);
+        return msg;
+    }
 }

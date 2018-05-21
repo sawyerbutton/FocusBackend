@@ -26,12 +26,12 @@ export class StateController {
         return msg;
     }
 
-    @Post()
-    // @Roles('systemAdmin','stateAdmin','communityAdmin')
-    public async addState(@Body() state:CreateStateDto){
-        const msg = await this.stateService.addState(state);
-        return msg;
-    }
+    // @Post()
+    // // @Roles('systemAdmin','stateAdmin','communityAdmin')
+    // public async addState(@Body() state:CreateStateDto){
+    //     const msg = await this.stateService.addState(state);
+    //     return msg;
+    // }
 
     @Patch(':id')
     // @Roles('systemAdmin','stateAdmin','communityAdmin')
@@ -45,5 +45,10 @@ export class StateController {
     public async deleteState(@Param() params){
         const msg = await this.stateService.deleteState(params.id);
         return msg;
+    }
+
+    @Post()
+    public async addAllState(@Body() state:CreateStateDto[]){
+        const msg = await this.stateService.addAllState(state);
     }
 }

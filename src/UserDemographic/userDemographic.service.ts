@@ -1,7 +1,8 @@
 import { Component ,Inject} from "@nestjs/common";
-import { Repository } from 'typeorm';
+import {getConnection, Repository} from 'typeorm';
 import { UserDemographicEntity} from "./userDemographic.entity";
 import { IUserDemographicService,IUserDemographic} from "./Interfaces";
+import {DemographicEntity} from "../Demographic/demographic.entity";
 
 @Component()
 export class UserDemographicService{
@@ -38,5 +39,12 @@ export class UserDemographicService{
         }else {
             return 'delete success';
         }
+    }
+
+    public async getDemographicAnswerByUserId(userId:number):Promise<Array<UserDemographicEntity>>{
+        return await getConnection().getRepository(UserDemographicEntity).createQueryBuilder("userDemographic")
+            .leftJoinAndSelect(DemographicEntity,"demographic","demographic.id = userDemographic.questionid")
+            .where("userDemographic.userid = :id",{id:userId})
+            .getMany();
     }
 }

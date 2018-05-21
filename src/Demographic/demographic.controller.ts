@@ -46,4 +46,6 @@ export class DemographicController{
         const msg = await this.demographicService.deleteDemographic(params.id);
         return msg;
     }
+
+
 }

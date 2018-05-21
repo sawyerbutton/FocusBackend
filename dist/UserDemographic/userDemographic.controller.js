@@ -57,6 +57,12 @@ let UserDemographicController = class UserDemographicController {
             return msg;
         });
     }
+    getUserDemographicByUserId(params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const msg = yield this.userDemographicService.getDemographicAnswerByUserId(params.id);
+            return msg;
+        });
+    }
 };
 __decorate([
     common_1.Get(),
@@ -92,6 +98,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserDemographicController.prototype, "deleteUserDemographic", null);
+__decorate([
+    common_1.Get('user/:id'),
+    __param(0, common_1.Param()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserDemographicController.prototype, "getUserDemographicByUserId", null);
 UserDemographicController = __decorate([
     common_1.Controller('userDemographic'),
     __metadata("design:paramtypes", [userDemographic_service_1.UserDemographicService])
