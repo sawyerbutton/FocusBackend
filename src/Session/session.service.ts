@@ -3,6 +3,7 @@ import {Repository, getRepository, getConnection} from 'typeorm';
 import {ISessionService,ISession} from "./Interfaces";
 import {SessionEntity} from "./session.entity";
 import {AnswerEntity} from "../Answer/answer.entity";
+import {QuestionnaireEntity} from "../Questionnaire/questionnaire.entity";
 
 @Component()
 export class SessionService implements ISessionService{
@@ -70,5 +71,13 @@ export class SessionService implements ISessionService{
         }else{
             return 'delete success';
         }
+    }
+
+    public async getQuestionAndAnswerBySeesionId(sessionId:number):Promise<Array<object>>{
+        return await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
+            .leftJoinAndSelect(QuestionnaireEntity,"questionnaire","questionnaire.id = answer.questionid ")
+            .leftJoinAndSelect("answer.session","session")
+            .where("session.id = :id",{id:sessionId})
+            .getMany();
     }
 }

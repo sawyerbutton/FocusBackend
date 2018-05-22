@@ -53,4 +53,10 @@ export class SessionController {
         const msg = await this.sessionService.deleteSession(params.id);
         return msg;
     }
+
+    @Get('/QA/:id')
+    public async getAllAnswerAndRelatedQuestionnaireBySession(@Param() params){
+        const msg = await this.sessionService.getQuestionAndAnswerBySeesionId(params.id);
+        return msg;
+    }
 }

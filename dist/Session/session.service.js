@@ -24,6 +24,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const session_entity_1 = require("./session.entity");
 const answer_entity_1 = require("../Answer/answer.entity");
+const questionnaire_entity_1 = require("../Questionnaire/questionnaire.entity");
 let SessionService = class SessionService {
     constructor(sessionRepository, answerRepository) {
         this.sessionRepository = sessionRepository;
@@ -89,6 +90,15 @@ let SessionService = class SessionService {
             else {
                 return 'delete success';
             }
+        });
+    }
+    getQuestionAndAnswerBySeesionId(sessionId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield typeorm_1.getConnection().getRepository(answer_entity_1.AnswerEntity).createQueryBuilder("answer")
+                .leftJoinAndSelect(questionnaire_entity_1.QuestionnaireEntity, "questionnaire", "questionnaire.id = answer.questionid ")
+                .leftJoinAndSelect("answer.session", "session")
+                .where("session.id = :id", { id: sessionId })
+                .getMany();
         });
     }
 };

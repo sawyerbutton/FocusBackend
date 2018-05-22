@@ -63,6 +63,12 @@ let SessionController = class SessionController {
             return msg;
         });
     }
+    getAllAnswerAndRelatedQuestionnaireBySession(params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const msg = yield this.sessionService.getQuestionAndAnswerBySeesionId(params.id);
+            return msg;
+        });
+    }
 };
 __decorate([
     common_1.Get(),
@@ -105,6 +111,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], SessionController.prototype, "deleteSession", null);
+__decorate([
+    common_1.Get('/QA/:id'),
+    __param(0, common_1.Param()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], SessionController.prototype, "getAllAnswerAndRelatedQuestionnaireBySession", null);
 SessionController = __decorate([
     common_1.Controller('session'),
     __metadata("design:paramtypes", [session_service_1.SessionService])
