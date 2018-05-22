@@ -79,56 +79,19 @@ export class SessionService implements ISessionService{
         return await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
             .leftJoinAndSelect("answer.session","session")
             .where("session.id = :id",{id:sessionId})
-            .getMany().then((answers) => {
-                return answers.map(async(answer) => {
+            .getMany().then(async(answers) => {
+                console.log(answers);
+                const result = await answers.map(async (answer) => {
                     answer["questionnaire"] = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
-                        .leftJoinAndSelect("questionnaire.domain","domain")
-                        .leftJoinAndSelect("questionnaire.subdomain","subdomain")
-                        .where("questionnaire.id = :id",{id:answer.questionid})
+                        .leftJoinAndSelect("questionnaire.domain", "domain")
+                        .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
+                        .where("questionnaire.id = :id", {id: answer.questionid})
                         .getOne();
+                    console.log(answer);
+                    return answer;
+                });
+                console.log(result);
+                return result;
             });
-            // .then(async(answers) =>{
-            //     let result:Array<object> = [];
-            //     answers.forEach(async (answer) => {
-            //         const selectedQuestionnaire = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
-            //             .leftJoinAndSelect("questionnaire.domain", "domain")
-            //             .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
-            //             .where("questionnaire.id = :id", {id: answer.questionid})
-            //             .getOne();
-            //         answer["questionnaire"] = selectedQuestionnaire;
-            //         result.push(answer);
-            //     });
-            //     return result;
-            // });
-        // return await selectedAnswer.map(async(answer) => {
-        //     const result = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
-        //         .leftJoinAndSelect("questionnaire.domain","domain")
-        //         .leftJoinAndSelect("questionnaire.subdomain","subdomain")
-        //         .where("questionnaire.id = :id",{id:answer.questionid})
-        //         .getOne();
-        //     answer["questionnaire"] = result;
-        // })
-
-        // await selectedAnswer.forEach(async(answer) => {
-        //     const selectedQuestionnaire = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
-        //         .leftJoinAndSelect("questionnaire.domain","domain")
-        //         .leftJoinAndSelect("questionnaire.subdomain","subdomain")
-        //         .where("questionnaire.id = :id",{id:answer.questionid})
-        //         .getOne();
-        //     answer["questionnaire"] = selectedQuestionnaire;
-        //     await result.push(answer);
-        // })
-
-        // const result = await getConnection().getRepository(QuestionnaireEntity)
-        //     .createQueryBuilder("questionnaire")
-        //     .leftJoinAndSelect("questionnaire.domain", "domain")
-        //     .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
-        //     .leftJoinAndSelect(AnswerEntity,"answer","answer.questionid = questionnaire.id")
-        //     .leftJoin("answer.session","session")
-        //     .where("session.id = :id",{id:sessionId})
-        //     .getMany();
-        //
-        // return result;
-
     }
 }
