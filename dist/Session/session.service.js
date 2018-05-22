@@ -97,21 +97,16 @@ let SessionService = class SessionService {
             const selectedAnswer = yield typeorm_1.getConnection().getRepository(answer_entity_1.AnswerEntity).createQueryBuilder("answer")
                 .leftJoinAndSelect("answer.session", "session")
                 .where("session.id = :id", { id: sessionId })
-                .getMany()
-                .then((answers) => __awaiter(this, void 0, void 0, function* () {
-                let result = [];
-                yield answers.forEach((answer) => __awaiter(this, void 0, void 0, function* () {
-                    const selectedQuestionnaire = yield typeorm_1.getConnection().getRepository(questionnaire_entity_1.QuestionnaireEntity).createQueryBuilder("questionnaire")
-                        .leftJoinAndSelect("questionnaire.domain", "domain")
-                        .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
-                        .where("questionnaire.id = :id", { id: answer.questionid })
-                        .getOne();
-                    answer["questionnaire"] = selectedQuestionnaire;
-                    result.push(answer);
-                }));
-                return yield result;
+                .getMany();
+            const result = yield selectedAnswer.map((answer) => __awaiter(this, void 0, void 0, function* () {
+                const result = yield typeorm_1.getConnection().getRepository(questionnaire_entity_1.QuestionnaireEntity).createQueryBuilder("questionnaire")
+                    .leftJoinAndSelect("questionnaire.domain", "domain")
+                    .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
+                    .where("questionnaire.id = :id", { id: answer.questionid })
+                    .getOne();
+                answer["questionnaire"] = result;
             }));
-            return selectedAnswer;
+            return result;
         });
     }
 };
