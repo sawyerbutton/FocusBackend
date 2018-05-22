@@ -75,23 +75,22 @@ export class SessionService implements ISessionService{
     }
 
     public async getQuestionAndAnswerBySessionId(sessionId:number):Promise<Array<object>>{
-        // let result:Array<object> = [];
-        return await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
+        let solution:Array<object> = [];
+        await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
             .leftJoinAndSelect("answer.session","session")
             .where("session.id = :id",{id:sessionId})
             .getMany().then(async(answers) => {
-                console.log(answers);
                 const result = await answers.map(async (answer) => {
                     answer["questionnaire"] = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
                         .leftJoinAndSelect("questionnaire.domain", "domain")
                         .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
                         .where("questionnaire.id = :id", {id: answer.questionid})
                         .getOne();
-                    console.log(answer);
                     return answer;
                 });
-                console.log(result);
-                return result;
+                solution =  result;
             });
+        console.log(solution);
+        return solution;
     }
 }
