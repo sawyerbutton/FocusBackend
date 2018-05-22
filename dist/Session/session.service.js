@@ -94,19 +94,18 @@ let SessionService = class SessionService {
     }
     getQuestionAndAnswerBySessionId(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const selectedAnswer = yield typeorm_1.getConnection().getRepository(answer_entity_1.AnswerEntity).createQueryBuilder("answer")
+            return yield typeorm_1.getConnection().getRepository(answer_entity_1.AnswerEntity).createQueryBuilder("answer")
                 .leftJoinAndSelect("answer.session", "session")
                 .where("session.id = :id", { id: sessionId })
-                .getMany();
-            const result = yield selectedAnswer.map((answer) => __awaiter(this, void 0, void 0, function* () {
-                const result = yield typeorm_1.getConnection().getRepository(questionnaire_entity_1.QuestionnaireEntity).createQueryBuilder("questionnaire")
-                    .leftJoinAndSelect("questionnaire.domain", "domain")
-                    .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
-                    .where("questionnaire.id = :id", { id: answer.questionid })
-                    .getOne();
-                answer["questionnaire"] = result;
-            }));
-            return result;
+                .getMany().then((answers) => {
+                return answers.map((answer) => __awaiter(this, void 0, void 0, function* () {
+                    answer["questionnaire"] = yield typeorm_1.getConnection().getRepository(questionnaire_entity_1.QuestionnaireEntity).createQueryBuilder("questionnaire")
+                        .leftJoinAndSelect("questionnaire.domain", "domain")
+                        .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
+                        .where("questionnaire.id = :id", { id: answer.questionid })
+                        .getOne();
+                }));
+            });
         });
     }
 };

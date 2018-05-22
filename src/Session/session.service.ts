@@ -76,10 +76,17 @@ export class SessionService implements ISessionService{
 
     public async getQuestionAndAnswerBySessionId(sessionId:number):Promise<Array<object>>{
         // let result:Array<object> = [];
-        const selectedAnswer =  await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
+        return await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
             .leftJoinAndSelect("answer.session","session")
             .where("session.id = :id",{id:sessionId})
-            .getMany();
+            .getMany().then((answers) => {
+                return answers.map(async(answer) => {
+                    answer["questionnaire"] = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
+                        .leftJoinAndSelect("questionnaire.domain","domain")
+                        .leftJoinAndSelect("questionnaire.subdomain","subdomain")
+                        .where("questionnaire.id = :id",{id:answer.questionid})
+                        .getOne();
+            });
             // .then(async(answers) =>{
             //     let result:Array<object> = [];
             //     answers.forEach(async (answer) => {
@@ -93,15 +100,14 @@ export class SessionService implements ISessionService{
             //     });
             //     return result;
             // });
-        const result = await selectedAnswer.map(async(answer) => {
-            const result = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
-                .leftJoinAndSelect("questionnaire.domain","domain")
-                .leftJoinAndSelect("questionnaire.subdomain","subdomain")
-                .where("questionnaire.id = :id",{id:answer.questionid})
-                .getOne();
-            answer["questionnaire"] = result;
-        })
-        return result;
+        // return await selectedAnswer.map(async(answer) => {
+        //     const result = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
+        //         .leftJoinAndSelect("questionnaire.domain","domain")
+        //         .leftJoinAndSelect("questionnaire.subdomain","subdomain")
+        //         .where("questionnaire.id = :id",{id:answer.questionid})
+        //         .getOne();
+        //     answer["questionnaire"] = result;
+        // })
 
         // await selectedAnswer.forEach(async(answer) => {
         //     const selectedQuestionnaire = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
