@@ -92,15 +92,23 @@ let SessionService = class SessionService {
             }
         });
     }
-    getQuestionAndAnswerBySesionId(sessionId) {
+    getQuestionAndAnswerBySessionId(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield typeorm_1.getConnection().getRepository(answer_entity_1.AnswerEntity).createQueryBuilder("answer")
-                .leftJoinAndSelect(questionnaire_entity_1.QuestionnaireEntity, "questionnaire", "questionnaire.id = answer.questionid ")
-                .leftJoinAndSelect("questionnaire.domain", "domain")
-                .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
+            let result = [];
+            const selectedAnswer = yield typeorm_1.getConnection().getRepository(answer_entity_1.AnswerEntity).createQueryBuilder("answer")
                 .leftJoinAndSelect("answer.session", "session")
                 .where("session.id = :id", { id: sessionId })
                 .getMany();
+            yield selectedAnswer.forEach((answer) => __awaiter(this, void 0, void 0, function* () {
+                const selectedQuestionnaire = yield typeorm_1.getConnection().getRepository(questionnaire_entity_1.QuestionnaireEntity).createQueryBuilder("questionnaire")
+                    .leftJoinAndSelect("questionnaire.domain", "domain")
+                    .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
+                    .where("questionnaire.id = :id", { id: answer.questionid })
+                    .getOne();
+                answer["questionnaire"] = selectedQuestionnaire;
+                result.push(answer);
+            }));
+            return yield result;
         });
     }
 };

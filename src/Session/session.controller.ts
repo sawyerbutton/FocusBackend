@@ -56,7 +56,7 @@ export class SessionController {
 
     @Get('/QA/:id')
     public async getAllAnswerAndRelatedQuestionnaireBySession(@Param() params){
-        const msg = await this.sessionService.getQuestionAndAnswerBySesionId(params.id);
+        const msg = await this.sessionService.getQuestionAndAnswerBySessionId(params.id);
         return msg;
     }
 }
