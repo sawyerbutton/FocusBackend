@@ -75,12 +75,23 @@ export class SessionService implements ISessionService{
     }
 
     public async getQuestionAndAnswerBySessionId(sessionId:number):Promise<Array<object>>{
-        let solution:Array<object> = [];
-        await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
+        // let solution:Array<object> = [];
+        const selectedAnswers = await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
             .leftJoinAndSelect("answer.session","session")
             .where("session.id = :id",{id:sessionId})
-            .getMany().then(async(answers) => {
-                const result = await answers.map(async (answer) => {
+            .getMany();
+            // .getMany().then(async(answers) => {
+            //     const result = await answers.map(async (answer) => {
+            //         answer["questionnaire"] = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
+            //             .leftJoinAndSelect("questionnaire.domain", "domain")
+            //             .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
+            //             .where("questionnaire.id = :id", {id: answer.questionid})
+            //             .getOne();
+            //         return answer;
+            //     });
+            //     solution =  result;
+            // });
+        await selectedAnswers.map(async (answer) => {
                     answer["questionnaire"] = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
                         .leftJoinAndSelect("questionnaire.domain", "domain")
                         .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
@@ -88,9 +99,7 @@ export class SessionService implements ISessionService{
                         .getOne();
                     return answer;
                 });
-                solution =  result;
-            });
-        console.log(solution);
-        return solution;
+        console.log(selectedAnswers);
+        return selectedAnswers;
     }
 }
