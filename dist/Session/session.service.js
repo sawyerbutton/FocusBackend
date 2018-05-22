@@ -92,10 +92,12 @@ let SessionService = class SessionService {
             }
         });
     }
-    getQuestionAndAnswerBySeesionId(sessionId) {
+    getQuestionAndAnswerBySesionId(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield typeorm_1.getConnection().getRepository(answer_entity_1.AnswerEntity).createQueryBuilder("answer")
                 .leftJoinAndSelect(questionnaire_entity_1.QuestionnaireEntity, "questionnaire", "questionnaire.id = answer.questionid ")
+                .leftJoinAndSelect("questionnaire.domain", "domain")
+                .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
                 .leftJoinAndSelect("answer.session", "session")
                 .where("session.id = :id", { id: sessionId })
                 .getMany();

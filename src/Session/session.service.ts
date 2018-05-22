@@ -73,9 +73,11 @@ export class SessionService implements ISessionService{
         }
     }
 
-    public async getQuestionAndAnswerBySeesionId(sessionId:number):Promise<Array<object>>{
+    public async getQuestionAndAnswerBySesionId(sessionId:number):Promise<Array<object>>{
         return await getConnection().getRepository(AnswerEntity).createQueryBuilder("answer")
             .leftJoinAndSelect(QuestionnaireEntity,"questionnaire","questionnaire.id = answer.questionid ")
+            .leftJoinAndSelect("questionnaire.domain","domain")
+            .leftJoinAndSelect("questionnaire.subdomain","subdomain")
             .leftJoinAndSelect("answer.session","session")
             .where("session.id = :id",{id:sessionId})
             .getMany();

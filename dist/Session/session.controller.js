@@ -65,7 +65,7 @@ let SessionController = class SessionController {
     }
     getAllAnswerAndRelatedQuestionnaireBySession(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const msg = yield this.sessionService.getQuestionAndAnswerBySeesionId(params.id);
+            const msg = yield this.sessionService.getQuestionAndAnswerBySesionId(params.id);
             return msg;
         });
     }
