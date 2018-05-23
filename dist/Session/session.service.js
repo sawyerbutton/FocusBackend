@@ -98,16 +98,14 @@ let SessionService = class SessionService {
                 .leftJoinAndSelect("answer.session", "session")
                 .where("session.id = :id", { id: sessionId })
                 .getMany();
-            yield selectedAnswers.map((answer) => __awaiter(this, void 0, void 0, function* () {
-                answer["questionnaire"] = yield typeorm_1.getConnection().getRepository(questionnaire_entity_1.QuestionnaireEntity).createQueryBuilder("questionnaire")
+            return Promise.all(selectedAnswers.map((answer) => __awaiter(this, void 0, void 0, function* () {
+                const selectedQuestionnaire = yield typeorm_1.getConnection().getRepository(questionnaire_entity_1.QuestionnaireEntity).createQueryBuilder("questionnaire")
                     .leftJoinAndSelect("questionnaire.domain", "domain")
                     .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
                     .where("questionnaire.id = :id", { id: answer.questionid })
                     .getOne();
-                return answer;
-            }));
-            console.log(selectedAnswers);
-            return selectedAnswers;
+                return { answer: answer, questionnaire: selectedQuestionnaire, test: 'string' };
+            })));
         });
     }
 };

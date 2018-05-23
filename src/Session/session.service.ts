@@ -91,15 +91,13 @@ export class SessionService implements ISessionService{
             //     });
             //     solution =  result;
             // });
-        await selectedAnswers.map(async (answer) => {
-                    answer["questionnaire"] = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
+        return Promise.all(selectedAnswers.map(async (answer) => {
+                    const selectedQuestionnaire = await getConnection().getRepository(QuestionnaireEntity).createQueryBuilder("questionnaire")
                         .leftJoinAndSelect("questionnaire.domain", "domain")
                         .leftJoinAndSelect("questionnaire.subdomain", "subdomain")
                         .where("questionnaire.id = :id", {id: answer.questionid})
                         .getOne();
-                    return answer;
-                });
-        console.log(selectedAnswers);
-        return selectedAnswers;
+                    return {answer:answer,questionnaire:selectedQuestionnaire, test: 'string'};
+                }));
     }
 }
